@@ -1,0 +1,28 @@
+<div class="pannelArea  mt-4 col-sm-12 col-md-6 offset-md-3">
+{% for apath, aname in items %}
+    {% if loop.first %}
+			<div class="card-body ">
+				<h4 class="bold-title bold-title-res">{{title}}</h4>
+    			<div class="d-flex response flex-wrap">
+    {% endif %}
+    {% set path = (apath matches '/^\\d+$/') ?aname:apath %}
+    {% set path = ('.' not in path)?path:path?path_for(path):'#' %}
+    {% set name = (apath matches '/^\\d+$/') ?pagetitles[aname]:aname %}
+    {% if not name %}
+    			<div class="p-2 col-sm-12 col-md-12"></div>
+    {% elseif not loop.last %}
+				<div class="py-1 col-sm-12 col-md-6">
+					<a href="{{ path }}" class="  btn btn-primary full-width btn-floral btn-record">{{name}}</a>
+				</div>			
+    {% endif %}
+    {% if loop.last %}
+			</div>
+		</div>
+		<div class="card-footer">
+			<a href="{{ path }}" class="  btn btn-primary full-width mt-1  btn-floral btn-floral-color">{{name}}</a>
+		</div>
+	{% endif %}
+{% else %}
+	No menu items for {{title}}?
+{% endfor %}
+</div>

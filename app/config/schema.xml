@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore" schema="dbo" identifierQuoting="true">
+  <table name="[Table Business Detail]" idMethod="native" phpName="Tablebusinessdetail">
+    <column name="[Business ID]" tableMapName="BusinessId" phpName="BusinessId" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="[Business Name]" tableMapName="BusinessName" phpName="BusinessName" type="VARCHAR" size="100"/>
+    <column name="[Contact Name]" tableMapName="ContactName" phpName="ContactName" type="VARCHAR" size="60"/>
+    <column name="Phone1" phpName="Phone1" type="VARCHAR" size="40"/>
+    <column name="Phone2" phpName="Phone2" type="VARCHAR" size="40"/>
+    <column name="Mobile1" phpName="Mobile1" type="VARCHAR" size="40"/>
+    <column name="Fax1" phpName="Fax1" type="VARCHAR" size="40"/>
+    <column name="[After Hours1]" tableMapName="AfterHours1" phpName="AfterHours1" type="VARCHAR" size="40"/>
+    <column name="[Email Address1]" tableMapName="EmailAddress1" phpName="EmailAddress1" type="VARCHAR" size="60"/>
+    <column name="ABN1" phpName="Abn1" type="VARCHAR" size="40"/>
+    <column name="Logo" phpName="Logo" type="LONGVARBINARY" size="2147483647"/>
+    <column name="Note1" phpName="Note1" type="VARCHAR" size="450"/>
+    <column name="Note2" phpName="Note2" type="VARCHAR" size="450"/>
+    <column name="Address1" phpName="Address1" type="VARCHAR" size="100"/>
+    <column name="City1" phpName="City1" type="VARCHAR" size="60"/>
+    <column name="State1" phpName="State1" type="VARCHAR" size="6"/>
+    <column name="[Post Code1]" tableMapName="PostCode1" phpName="PostCode1" type="VARCHAR" size="14"/>
+    <column name="Address2" phpName="Address2" type="VARCHAR" size="100"/>
+    <column name="City2" phpName="City2" type="VARCHAR" size="60"/>
+    <column name="State2" phpName="State2" type="VARCHAR" size="6"/>
+    <column name="[Post Code2]" tableMapName="PostCode2" phpName="PostCode2" type="VARCHAR" size="14"/>
+  </table>
+  <table name="[Table Company Detail]" idMethod="native" phpName="Tablecompanydetail">
+    <column name="[Company ID]" tableMapName="CompanyId" phpName="CompanyId" type="INTEGER" size="4" scale="0" autoIncrement="true" required="true"/>
+    <column name="[Company Name]" tableMapName="CompanyName" phpName="CompanyName" type="VARCHAR" size="100"/>
+    <column name="[Contact Name1]" tableMapName="ContactName1" phpName="ContactName1" type="VARCHAR" size="60"/>
+    <column name="[Company Type]" tableMapName="CompanyName1" phpName="CompanyType" type="INTEGER" size="4" scale="0"/>
+    <column name="Phone3" phpName="Phone3" type="VARCHAR" size="40"/>
+    <column name="Phone4" phpName="Phone4" type="VARCHAR" size="40"/>
+    <column name="Mobile2" phpName="Mobile2" type="VARCHAR" size="40"/>
+    <column name="Fax2" phpName="Fax2" type="VARCHAR" size="40"/>
+    <column name="[After Hours2]" tableMapName="AfterHours2" phpName="AfterHours2" type="VARCHAR" size="40"/>
+    <column name="[Email Address2]" tableMapName="EmailAddress2" phpName="EmailAddress2" type="VARCHAR" size="60"/>
+    <column name="[Batch No]" tableMapName="BatchNo" phpName="BatchNo" type="VARCHAR" size="20"/>
+    <column name="ABN2" phpName="Abn2" type="VARCHAR" size="40"/>
+    <column name="[Account Type]" tableMapName="AccountType" phpName="AccountType" type="INTEGER" size="4" scale="0"/>
+    <column name="Address3" phpName="Address3" type="VARCHAR" size="100"/>
+    <column name="City3" phpName="City3" type="VARCHAR" size="60"/>
+    <column name="State3" phpName="State3" type="VARCHAR" size="6"/>
+    <column name="[Post Code3]" tableMapName="PostCode3" phpName="PostCode3" type="VARCHAR" size="14"/>
+    <column name="Address4" phpName="Address4" type="VARCHAR" size="100"/>
+    <column name="City4" phpName="City4" type="VARCHAR" size="60"/>
+    <column name="State4" phpName="State4" type="VARCHAR" size="6"/>
+    <column name="[Post Code4]" tableMapName="PostCode4" phpName="PostCode4" type="VARCHAR" size="14"/>
+  </table>
+  <table name="[Table Company Type]" idMethod="native" phpName="Tablecompanytype">
+    <column name="[Company Type]" tableMapName="CompanyType" phpName="CompanyType" type="INTEGER" size="4" scale="0" autoIncrement="true" required="true"/>
+    <column name="[Company Type Description]" tableMapName="CompanyTypeDescription" phpName="CompanyTypeDescription" type="VARCHAR" size="100"/>
+  </table>
+  <table name="[Table Credit Type]" idMethod="native" phpName="Tablecredittype">
+    <column name="[Account Type]" tableMapName="AccountType" phpName="AccountType" type="INTEGER" size="4" scale="0" autoIncrement="true" required="true"/>
+    <column name="[Account Description]" tableMapName="AccountDescription" phpName="AccountDescription" type="VARCHAR" size="100"/>
+    <column name="[Account Days]" tableMapName="AccountDays" phpName="AccountDays" type="INTEGER" size="4" scale="0"/>
+  </table>
+  <table name="[Table Default Setting]" idMethod="native" phpName="Tabledefaultsetting">
+    <column name="ID" phpName="Id" type="INTEGER" size="4" scale="0" autoIncrement="true" required="true"/>
+    <column name="[Business No]" tableMapName="BusinessNo" phpName="BusinessNo" type="INTEGER" size="4" scale="0"/>
+    <column name="[Date Month Start]" tableMapName="DateMonthStart" phpName="DateMonthStart" type="VARCHAR" size="54"/>
+    <column name="[Date Month End]" tableMapName="DateMonthEnd" phpName="DateMonthEnd" type="VARCHAR" size="54"/>
+    <column name="[Date Year Start]" tableMapName="DateYearStart" phpName="DateYearStart" type="VARCHAR" size="54"/>
+    <column name="[Date Year End]" tableMapName="DateYearEnd" phpName="DateYearEnd" type="VARCHAR" size="54"/>
+    <column name="[Labour Rate]" tableMapName="LabourRate" phpName="LabourRate" type="DECIMAL" size="21" scale="4"/>
+    <column name="[Tax Percent]" tableMapName="TaxPercent" phpName="TaxPercent" type="FLOAT" size="8"/>
+    <column name="[Markup Percent]" tableMapName="MarkupPercent" phpName="MarkupPercent" type="FLOAT" size="8"/>
+    <column name="[Sales Expense]" tableMapName="SalesExpense" phpName="SalesExpense" type="INTEGER" size="4" scale="0"/>
+    <column name="[Purchase Expense]" tableMapName="PurchaseExpense" phpName="PurchaseExpense" type="INTEGER" size="4" scale="0"/>
+    <column name="[Quote Expense]" tableMapName="QuoteExpense" phpName="QuoteExpense" type="INTEGER" size="4" scale="0"/>
+  </table>
+  <table name="[Table Expense Code]" idMethod="native" phpName="Tableexpensecode">
+    <column name="[Expense Code]" tableMapName="ExpenseCode" phpName="ExpenseCode" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="[Expense Description]" tableMapName="ExpenseDescription" phpName="ExpenseDescription" type="VARCHAR" size="100"/>
+    <column name="[Expense Group]" tableMapName="ExpenseGroup" phpName="ExpenseGroup" type="INTEGER" size="4" scale="0"/>
+    <foreign-key foreignTable="[Table Expense Group]" name="FK_TableExpenseCode_TableExpenseGroup">
+      <reference local="[Expense Group]" foreign="[Group ID]"/>
+    </foreign-key>
+  </table>
+  <table name="[Table Expense Group]" idMethod="native" phpName="Tableexpensegroup">
+    <column name="[Group ID]" tableMapName="GroupId" phpName="GroupId" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="[Group Description]" tableMapName="GroupDescription" phpName="GroupDescription" type="VARCHAR" size="100"/>
+  </table>
+  <table name="[Table Transaction Items]" idMethod="native" phpName="Tabletransactionitems">
+    <column name="ID" phpName="Id" type="INTEGER" size="4" scale="0" autoIncrement="true" required="true"/>
+    <column name="[Title Item]" tableMapName="TitleItem" phpName="TitleItem" type="INTEGER" size="4" scale="0"/>
+    <column name="Item" phpName="Item" type="INTEGER" size="4" scale="0"/>
+    <column name="Description" phpName="Description" type="VARCHAR" size="510"/>
+    <column name="[Tax%]" tableMapName="Tax" phpName="Tax" type="FLOAT" size="8"/>
+    <column name="[GST Collected]" tableMapName="GstCollected" phpName="GstCollected" type="DECIMAL" size="21" scale="4"/>
+    <column name="[GST Paid]" tableMapName="GstPaid" phpName="GstPaid" type="DECIMAL" size="21" scale="4"/>
+    <column name="Debit" phpName="Debit" type="DECIMAL" size="21" scale="4"/>
+    <column name="Credit" phpName="Credit" type="DECIMAL" size="21" scale="4"/>
+    <column name="Expense" phpName="Expense" type="INTEGER" size="4" scale="0"/>
+    <foreign-key foreignTable="[Table Expense Code]" name="FK_TableTransactionItems_TableExpenseCode">
+      <reference local="Expense" foreign="[Expense Code]"/>
+    </foreign-key>
+    <foreign-key foreignTable="[Table Transaction Items Title]" name="FK_TableTransactionItems_TableTransactionItemsTitle">
+      <reference local="[Title Item]" foreign="[Title No]"/>
+    </foreign-key>
+    <foreign-key foreignTable="[Table Tax Code]" name="FK_TableTransactionItems_TableTaxCode">
+      <reference local="[Tax%]" foreign="[Tax Percent]"/>
+    </foreign-key>
+  </table>
+  <table name="[Table Transaction Items Title]" idMethod="native" phpName="Tabletransactionitemstitle">
+    <column name="[Title No]" tableMapName="TitleNo" phpName="TitleNo" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="TransactionNo" phpName="Transactionno" type="INTEGER" size="4" scale="0"/>
+    <column name="[Title Description]" tableMapName="TitleDescription" phpName="TitleDescription" type="VARCHAR" size="510"/>
+    <foreign-key foreignTable="[Table Transaction Main]" name="FK_TableTransactionItemsTitle_TableTransactionMain">
+      <reference local="TransactionNo" foreign="[Transaction ID]"/>
+    </foreign-key>
+  </table>
+  <table name="[Table Transaction Main]" idMethod="native" phpName="Tabletransactionmain">
+    <column name="[Transaction ID]" tableMapName="TransactionId" phpName="TransactionId" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="[Business No]" tableMapName="BusinessNo" phpName="BusinessNo" type="INTEGER" size="4" scale="0"/>
+    <column name="[Type]" tableMapName="Type" phpName="Type" type="INTEGER" size="4" scale="0"/>
+    <column name="[Company No]" tableMapName="CompanyNo" phpName="CompanyNo" type="INTEGER" size="4" scale="0"/>
+    <column name="[Date]" tableMapName="Date" phpName="Date" type="VARCHAR" size="54"/>
+    <column name="[Order No]" tableMapName="OrderNo" phpName="OrderNo" type="VARCHAR" size="40"/>
+    <column name="[Payment No]" tableMapName="PaymentNo" phpName="PaymentNo" type="VARCHAR" size="30"/>
+    <column name="[Payment Detail]" tableMapName="PaymentDetail" phpName="PaymentDetail" type="VARCHAR" size="100"/>
+    <column name="Paid" phpName="Paid" type="BOOLEAN" size="1"/>
+    <column name="Note" phpName="Note" type="VARCHAR" size="166"/>
+    <foreign-key foreignTable="[Table Business Detail]" name="FK_TableTransactionMain_TableBusinessDetail">
+      <reference local="[Business No]" foreign="[Business ID]"/>
+    </foreign-key>
+    <foreign-key foreignTable="[Table Company Detail]" name="FK_TableTransactionMain_TableCompanyDetail">
+      <reference local="[Company No]" foreign="[Company ID]"/>
+    </foreign-key>
+  </table>
+  <table name="[Table Transaction Type]" idMethod="native" phpName="Tabletransactiontype">
+    <column name="[Type Code]" tableMapName="TypeCode" phpName="TypeCode" type="INTEGER" size="4" scale="0" autoIncrement="true" required="true"/>
+    <column name="[Type Description]" tableMapName="TypeDescription" phpName="TypeDescription" type="VARCHAR" size="100"/>
+  </table>
+  <table name="[Table Tax Code]" idMethod="native" phpName="Tabletaxcode">
+    <column name="[Tax Percent]" tableMapName="TaxPercent" phpName="TaxPercent" type="FLOAT" size="8" primaryKey="true" required="true"/>
+    <column name="[Tax Code]" tableMapName="TaxCode" phpName="TaxCode" type="VARCHAR" size="30"/>
+    <column name="[Tax Description]" tableMapName="TaxDescription" phpName="TaxDescription" type="VARCHAR" size="100"/>
+  </table>
+</database>

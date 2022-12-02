@@ -1,0 +1,14 @@
+propel:
+  paths:
+        schemaDir: config/
+        phpDir: src/dbclasses        
+        phpConfDir: config/
+        migrationDir: migrations/
+  runtime:
+      defaultConnection: default
+      connections:
+          - default
+  generator:
+      defaultConnection: default
+      connections:
+          - default

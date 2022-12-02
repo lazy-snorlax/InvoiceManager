@@ -1,0 +1,39 @@
+{% extends "root.twig" %}
+
+{% block body %}
+<div class="container mx-auto text-center">
+    <div id="TableList" class="overflow-x-auto" data-invoiceroute="{{ path_for('invoice.data')}}">
+        {# <table class="table w-full">
+            <thead>
+                <tr>
+                    <th>Transaction Id</th>
+                    <th>Company</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr class="hover">
+                    <td>{{item.TransactionId}}</td>
+                    <td>{{item.Company.CompanyName}}</td>
+                    <td>{{item.Date}}</td>
+                    <td>
+                        <label for="invoiceModal" class="btn btn-primary">Open</label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> #}
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="{{ base_url() }}/dist/TableList.bundle.js?q={{random()}}"></script>
+
+{% endblock %}

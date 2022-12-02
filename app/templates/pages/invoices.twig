@@ -1,0 +1,89 @@
+{% extends "root.twig" %}
+
+{% block body %}
+<div class="container mx-auto">
+    
+    <div id="invoiceDetails" data-d="{{invoice|json_encode}}" data-save="{{ path_for('invoice.save') }}"></div>
+
+    {# <form data-name="Tabletransactionmain">
+        <div class="flex space-x-4">
+            <div class="mb-4 w-1/4" >
+                <label class="label" for="TransactionId">
+                    <span class="label-text">Transaction Id</span>
+                </label>
+                <input class="input input-bordered w-full" type="number" disabled name="TransactionId" data-type="integer" required="required" />
+            </div>
+            <div class="mb-4 w-1/4" >
+                <label class="label" for="Date">
+                    <span class="label-text">Date</span>
+                </label>
+                <input class="input input-bordered w-full" type="date" name="Date" data-type="integer"  />
+            </div>
+            <div class="mb-4 w-1/2" >
+                <label class="label" for="CompanyNo">
+                    <span class="label-text">Company No</span>
+                </label>
+                <select class="input input-bordered w-full" type="number" name="CompanyNo" data-type="integer">
+                    <option value="0">HENLEY SA</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex space-x-4">
+            <div class="mb-4 w-1/4" >
+                <label class="label" for="Type">
+                    <span class="label-text">Type</span>
+                </label>
+                <select class="input input-bordered w-full" name="Type" data-type="integer" >
+                    <option value="1">Invoice</option>
+                </select>
+            </div>
+            <div class="mb-4 w-1/4" >
+                <label class="label" for="OrderNo">
+                    <span class="label-text">Order No</span>
+                </label>
+                <input class="input input-bordered w-full" type="number" name="OrderNo" data-type="integer"  />
+            </div>
+            <div class="mb-4 w-1/4" >
+                <label class="label" for="Paid">
+                    <span class="label-text">Paid</span>
+                </label>
+                <select class="input input-bordered w-full" name="Paid" data-type="boolean" >
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex space-x-10">
+            <div class="mb-4 w-1/2" >
+                <label class="label" for="BusinessNo">
+                    <span class="label-text">Business No</span>
+                </label>
+                <select class="input input-bordered w-full" name="BusinessNo" data-type="integer">
+                    <option value="0">G & R Morelli</option>
+                </select>
+            </div>
+            <div class="mb-4 w-1/2" >
+                <label class="label" for="PaymentDetail">
+                    <span class="label-text">Payment Detail</span>
+                </label>
+                <input class="input input-bordered w-full" type="number" name="PaymentDetail" data-type="integer"  />
+            </div>
+        
+        </div>
+        <div class="flex">
+            <div class="mb-4 w-full" >
+                <label class="label" for="Note">
+                    <span class="label-text">Note</span>
+                </label>
+                <input class="input input-bordered w-full" type="text" name="Note" data-type="varchar"  />
+            </div>
+        </div>
+    </form> #}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ base_url() }}/dist/Invoice.bundle.js?q={{random()}}"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "root.twig" %}
+
+{% block body %}
+
+<div class="container mx-auto text-center">
+    
+    {# <h1 class="text-3xl font-bold">Main Menu</h1> #}
+    <div class="flex flex-col mx-auto">
+        <div class="mb-2 mt-2">
+            <a href="{{path_for('invoice.list')}}" class="btn btn-secondary btn-wide">Invoices</a>
+        </div>
+        <div class="mb-2 mt-2">
+            <a href="{{ path_for('quote.list') }}" class="btn btn-secondary btn-wide">Quotes</a>
+        </div>
+        <div class="mb-2 mt-2">
+            <a href="{{ path_for('customers.list') }}" class="btn btn-secondary btn-wide">Customers</a>
+        </div>
+        <div class="mb-2 mt-2">
+            <a href="{{ path_for('suppliers.list') }}" class="btn btn-secondary btn-wide">Suppliers</a>
+        </div>
+        <div class="mb-2 mt-2">
+            <a class="btn btn-secondary btn-wide">Business</a>
+        </div>
+        <div class="mb-2 mt-2">
+            <a class="btn btn-secondary btn-wide">Settings</a>
+        </div>
+        <div class="mb-2 mt-2">
+            <a class="btn btn-secondary btn-wide">Reports</a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ base_url() }}/dist/MainMenu.bundle.js?q={{random()}}"></script>
+
+{% endblock %}

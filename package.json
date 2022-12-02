@@ -1,0 +1,46 @@
+{
+  "name": "mainrequiem",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack",
+    "dev-css": "npx tailwindcss -i ./app/src/css/input.css -o ./app/public/dist/output.css --watch",
+    "dev-js": "npx webpack watch --config=webpack.config.js",
+    "dev": "concurrently \"npm run dev-css\" \"npm run dev-js\""
+  },
+  "keywords": [],
+  "author": "Anthony Morelli",
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "@babel/preset-env": "^7.19.4",
+    "@tailwindcss/forms": "^0.5.3",
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.1.3",
+    "babel-plugin-macros": "^3.1.0",
+    "concurrently": "^7.5.0",
+    "daisyui": "^2.36.1",
+    "datatables.net": "^1.13.1",
+    "datatables.net-dt": "^1.13.1",
+    "datatables.net-fixedcolumns-dt": "^4.2.1",
+    "json-server": "^0.17.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.2",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.2.1",
+    "web-vitals": "^2.1.4"
+  }
+}
