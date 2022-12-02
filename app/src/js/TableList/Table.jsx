@@ -44,7 +44,7 @@ function Table({ route }) {
       setDatatableRef(React.createRef());
       setCRoute(res.route);
 
-      console.log(">>> Form", form);
+      // console.log(">>> Form", form);
       setForm(form);
     };
 
@@ -58,32 +58,36 @@ function Table({ route }) {
   } else {
     console.log(">>> Columns: ", columns);
     return (
-      <div>
-        <DataTable
-          ref={dataTableRef}
-          columns={columns}
-          options={options}
-          data={items}
-          pk={isPK}
-          route={route}
-          cRoute={cRoute}
-        />
-        <input type="checkbox" id="formModal" className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box w-11/12 max-w-5xl">
-            <label
-              htmlFor="formModal"
-              className="btn btn-sm btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <div
-              id="modalBody"
-              dangerouslySetInnerHTML={{ __html: form }}
-            ></div>
-          </div>
+      <>
+        <div className="container">
+          <DataTable
+            ref={dataTableRef}
+            columns={columns}
+            options={options}
+            data={items}
+            pk={isPK}
+            route={route}
+            cRoute={cRoute}
+          />
         </div>
-      </div>
+        {/* <div className="container">
+          <input type="checkbox" id="formModal" className="modal-toggle" />
+          <div className="modal">
+            <div className="modal-box w-11/12 max-w-5xl">
+              <label
+                htmlFor="formModal"
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <div
+                id="modalBody"
+                dangerouslySetInnerHTML={{ __html: form }}
+              ></div>
+            </div>
+          </div>
+        </div> */}
+      </>
     );
   }
 }

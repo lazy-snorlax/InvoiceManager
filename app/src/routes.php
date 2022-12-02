@@ -18,6 +18,7 @@ return function (App $app) {
         \App\Controllers\QuoteController::routes($this);
         \App\Controllers\CustomerController::routes($this);
         \App\Controllers\SupplierController::routes($this);
+        \App\Controllers\UtilitiesController::routes($this);
     })->add(new GuestMiddleware($container));
     
     $app->group('', function() {

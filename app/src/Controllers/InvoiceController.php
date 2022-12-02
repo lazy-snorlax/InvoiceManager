@@ -46,7 +46,13 @@ class InvoiceController extends Controller
         $invoice = \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($request->getAttribute('id'))->findOne();
         return $this->view->render($response, 'pages/invoices.twig', [
             "title" => "Invoice Details - Transaction ID " . $invoice->getTransactionId(),
-            "invoice" => $invoice->toArray()
+            "invoice" => $invoice->toArray(),
+            "routes" => [
+                "save" => $this->router->pathFor('invoice.save'),
+                "companies" => $this->router->pathFor('companies.list'),
+                "types" => $this->router->pathFor('types.list'),
+                "business" => $this->router->pathFor('business.list'),
+            ]
         ]);
         return $response;    
     }

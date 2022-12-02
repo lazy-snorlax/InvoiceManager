@@ -115,7 +115,7 @@
     <column name="[Business No]" tableMapName="BusinessNo" phpName="BusinessNo" type="INTEGER" size="4" scale="0"/>
     <column name="[Type]" tableMapName="Type" phpName="Type" type="INTEGER" size="4" scale="0"/>
     <column name="[Company No]" tableMapName="CompanyNo" phpName="CompanyNo" type="INTEGER" size="4" scale="0"/>
-    <column name="[Date]" tableMapName="Date" phpName="Date" type="VARCHAR" size="54"/>
+    <column name="[Date]" tableMapName="Date" phpName="Date" type="TIMESTAMP" size="54"/>
     <column name="[Order No]" tableMapName="OrderNo" phpName="OrderNo" type="VARCHAR" size="40"/>
     <column name="[Payment No]" tableMapName="PaymentNo" phpName="PaymentNo" type="VARCHAR" size="30"/>
     <column name="[Payment Detail]" tableMapName="PaymentDetail" phpName="PaymentDetail" type="VARCHAR" size="100"/>

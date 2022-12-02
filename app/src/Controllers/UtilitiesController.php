@@ -3,12 +3,48 @@ namespace App\Controllers;
 use App\Controllers\Controller;
 
 class UtilitiesController extends Controller
-{     
+{
+    
+    public static function routes(\Slim\App $app) {
+        $app->group('/Companies', function (\Slim\App $route) {
+                $route->get('', "UtilitiesController:CompaniesList")->setName('companies.list');
+            }
+        );
+        $app->group('/Types', function (\Slim\App $route) {
+                $route->get('', "UtilitiesController:TypesList")->setName('types.list');
+            }
+        );
+        $app->group('/Business', function (\Slim\App $route) {
+                $route->get('', "UtilitiesController:BusinessDetails")->setName('business.list');
+            }
+        );
+    }
 
-    public function index($request, $response)
+    public function CompaniesList($request, $response)
     {
-        return $this->view->render($response, 'root.twig');
-    }  
+        $companies = \TablecompanydetailQuery::create()->find();
+        return $response->withJSON([
+            "data" => $companies->toArray()
+        ]);
+    }
+
+    public function TypesList($request, $response)
+    {
+        $types = \TabletransactiontypeQuery::create()->find();
+        return $response->withJSON([
+            "data" => $types->toArray()
+        ]);
+    }
+
+    public function BusinessDetails($request, $response)
+    {
+        $business = \TablebusinessdetailQuery::create()->findOne()->toArray();
+        unset($business['Logo']);
+        
+        return $response->withJSON([
+            "data"=>$business
+        ]);
+    }
 
 }
 
