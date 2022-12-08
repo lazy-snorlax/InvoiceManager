@@ -90,6 +90,9 @@ return function (App $app) {
     $container['SupplierController'] = function ($container) {
         return new \App\Controllers\SupplierController($container);
     };
+    $container['TableListController'] = function ($container) {
+        return new \App\Controllers\TableListController($container);
+    };
 
     $container['UtilitiesController'] = function ($container) {
         return new \App\Controllers\UtilitiesController($container);

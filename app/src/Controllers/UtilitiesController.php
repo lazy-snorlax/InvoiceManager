@@ -18,6 +18,10 @@ class UtilitiesController extends Controller
                 $route->get('', "UtilitiesController:BusinessDetails")->setName('business.list');
             }
         );
+        $app->group('/Expensecodes', function (\Slim\App $route) {
+                $route->get('', "UtilitiesController:ExpensecodeList")->setName('expensecodes.list');
+            }
+        );
     }
 
     public function CompaniesList($request, $response)
@@ -31,6 +35,14 @@ class UtilitiesController extends Controller
     public function TypesList($request, $response)
     {
         $types = \TabletransactiontypeQuery::create()->find();
+        return $response->withJSON([
+            "data" => $types->toArray()
+        ]);
+    }
+
+    public function ExpensecodeList($request, $response)
+    {
+        $types = \TableexpensecodeQuery::create()->find();
         return $response->withJSON([
             "data" => $types->toArray()
         ]);

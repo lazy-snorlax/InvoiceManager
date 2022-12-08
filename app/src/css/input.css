@@ -25,3 +25,7 @@ table.dataTable .center {
 .w-full {
   width: 100% !important;
 }
+
+.money::before {
+  content: "$";
+}

@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container mx-auto">
     
-    <div id="invoiceDetails" data-d="{{invoice|json_encode}}" data-route="{{ routes|json_encode }}"></div>
+    <div id="invoiceDetails" data-d="{{invoice|json_encode}}" data-trans="{{ transactions|json_encode }}" data-route="{{ routes|json_encode }}"></div>
 
     {# <form data-name="Tabletransactionmain">
         <div class="flex space-x-4">

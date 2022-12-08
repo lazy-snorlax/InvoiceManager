@@ -37,6 +37,29 @@ class Tabletransactionmain extends BaseTabletransactionmain
         return $permissions;
     }
 
+    public static function findOne($pk) {
+        return \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($pk)->findOne();
+    }
+
+    public static function findAll() {
+        return \TabletransactionmainQuery::create()->filterByType(1)->find();
+    }
+
+    public static function tableRender() {
+        $data = null;
+
+        global $app;
+        $container = $app->getContainer();
+
+        $data['data'] = \Tabletransactionmain::findAll()->count() > 0 ? \Tabletransactionmain::findAll()->toArray() : [];
+        $data['columns'] = \Tabletransactionmain::tableColumns();
+        $data['permissions'] = \Tabletransactionmain::permissions();
+        $data['primarykey'] = \Tabletransactionmain::$primaryKey;
+        $data['route'] = $container->router->pathFor(\Tabletransactionmain::$route);
+
+        return $data;
+    }
+
     public function toArray(string $keyType = TableMap::TYPE_PHPNAME, bool $includeLazyLoadColumns = true, array $alreadyDumpedObjects = [], bool $includeForeignObjects = false): array {
 
         $parent = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);

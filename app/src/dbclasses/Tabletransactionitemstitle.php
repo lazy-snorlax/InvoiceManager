@@ -2,6 +2,10 @@
 
 use Base\Tabletransactionitemstitle as BaseTabletransactionitemstitle;
 
+use Propel\Runtime\Propel;
+use Propel\Runtime\Map\TableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
+
 /**
  * Skeleton subclass for representing a row from the '[Table Transaction Items Title]' table.
  *
@@ -13,5 +17,15 @@ use Base\Tabletransactionitemstitle as BaseTabletransactionitemstitle;
  */
 class Tabletransactionitemstitle extends BaseTabletransactionitemstitle
 {
+    
+    public function toArray(string $keyType = TableMap::TYPE_PHPNAME, bool $includeLazyLoadColumns = true, array $alreadyDumpedObjects = [], bool $includeForeignObjects = false): array {
 
+        $parent = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
+        if (!$parent) return $parent;
+
+        $parent['Lines'] = $this->getTabletransactionitemss() ? $this->getTabletransactionitemss()->toArray() : null;
+
+        return $parent;
+
+    }
 }

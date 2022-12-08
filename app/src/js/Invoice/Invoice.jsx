@@ -7,6 +7,13 @@ import InvoiceForm from "./InvoiceForm";
 const dom = document.querySelector("#invoiceDetails");
 const route = dom.dataset.route;
 const data = dom.dataset.d;
+const trans = dom.dataset.trans;
 
 const root = ReactDOMClient.createRoot(dom);
-root.render(<InvoiceForm route={JSON.parse(route)} data={JSON.parse(data)} />);
+root.render(
+  <InvoiceForm
+    route={JSON.parse(route)}
+    data={JSON.parse(data)}
+    trans={JSON.parse(trans)}
+  />
+);

@@ -19,39 +19,42 @@ class InvoiceController extends Controller
     {
         return $this->view->render($response, 'list.twig', [
             "title" => "Invoices",
+            "table" => "invoices",
+            "request" => $_REQUEST
         ]);
     }
     
     public function invoiceList($request, $response, array $args = []) {
         if (isset($args['id'])) {
-            $invoice = \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($request->getAttribute('id'))->findOne();
-
-            return $response->withJSON([
-                "data" => $invoice->toArray(),
-            ]);
+            // $invoice = \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($request->getAttribute('id'))->findOne();
+            
+            return $response->withJSON(
+                \Tabletransactionmain::findOne($args['id'])
+                // [
+                //     "data" => $invoice->toArray(),
+                // ]
+            );
         }
 
-        $invoice = \TabletransactionmainQuery::create()->filterByType(1)->find();
-        
-        return $response->withJSON([
-            "data" => $invoice->toArray(),
-            "columns" => \Tabletransactionmain::tableColumns(),
-            "permissions" => \Tabletransactionmain::permissions(),
-            "primarykey" => \Tabletransactionmain::$primaryKey,
-            "route" => $this->router->pathFor(\Tabletransactionmain::$route)
-        ]);
+        return $response->withJSON(\Tabletransactionmain::tableRender());
     }
 
     public function invoiceForm($request, $response, array $args = []) {
         $invoice = \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($request->getAttribute('id'))->findOne();
+        $invHeader = \TabletransactionitemstitleQuery::create()->filterByTransactionNo($invoice->getTransactionId())->find();
+
+        // !ddd($invoice->toArray(), $invHeader->toArray());
+
         return $this->view->render($response, 'pages/invoices.twig', [
             "title" => "Invoice Details - Transaction ID " . $invoice->getTransactionId(),
             "invoice" => $invoice->toArray(),
+            "transactions" => $invHeader->toArray(),
             "routes" => [
                 "save" => $this->router->pathFor('invoice.save'),
                 "companies" => $this->router->pathFor('companies.list'),
                 "types" => $this->router->pathFor('types.list'),
                 "business" => $this->router->pathFor('business.list'),
+                "expensecodes" => $this->router->pathFor('expensecodes.list'),
             ]
         ]);
         return $response;    
