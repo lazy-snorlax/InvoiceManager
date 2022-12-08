@@ -13,8 +13,10 @@ class CustomerController extends Controller
 
     public function list($request, $response)
     {
-        return $this->view->render($response, 'menu.twig', [
-            "title" => "Customers"
+        return $this->view->render($response, 'list.twig', [
+            "title" => "Customers",
+            "table" => "customers",
+            "request" => $_REQUEST
         ]);
     }  
 }

@@ -13,10 +13,14 @@ class QuoteController extends Controller
 
     public function list($request, $response)
     {
-        return $this->view->render($response, 'menu.twig', [
-            "title" => "Quotes"
+        return $this->view->render($response, 'list.twig', [
+            "title" => "Quotes",
+            "table" => "quotes",
+            "request" => $_REQUEST
         ]);
-    }  
+    }
+
+
 }
 
 

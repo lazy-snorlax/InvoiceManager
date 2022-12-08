@@ -32,7 +32,7 @@ class Tabletransactionmain extends BaseTabletransactionmain
     public static function permissions() {
         $permissions = [];
         $permissions['isEdit'] = true;
-        $permissions['isDelete'] = true;
+        $permissions['isDelete'] = false;
 
         return $permissions;
     }

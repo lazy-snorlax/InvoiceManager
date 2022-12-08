@@ -24,7 +24,7 @@
     <column name="[Post Code2]" tableMapName="PostCode2" phpName="PostCode2" type="VARCHAR" size="14"/>
   </table>
   <table name="[Table Company Detail]" idMethod="native" phpName="Tablecompanydetail">
-    <column name="[Company ID]" tableMapName="CompanyId" phpName="CompanyId" type="INTEGER" size="4" scale="0" autoIncrement="true" required="true"/>
+    <column name="[Company ID]" tableMapName="CompanyId" phpName="CompanyId" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="[Company Name]" tableMapName="CompanyName" phpName="CompanyName" type="VARCHAR" size="100"/>
     <column name="[Contact Name1]" tableMapName="ContactName1" phpName="ContactName1" type="VARCHAR" size="60"/>
     <column name="[Company Type]" tableMapName="CompanyName1" phpName="CompanyType" type="INTEGER" size="4" scale="0"/>

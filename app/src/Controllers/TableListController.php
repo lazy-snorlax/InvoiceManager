@@ -9,7 +9,10 @@ use Propel\Runtime\Map\TableMap;
 class TableListController extends Controller {
 
     public const TABLE_DATA = [
-        "invoices" => "\Tabletransactionmain"
+        "invoices" => "\Tabletransactionmain",
+        // TODO:  "quotes" => "\Tabletransactionmain",  ----type => 2
+        "customers" => "\Tablecompanydetail",
+        // TODO:  "suppliers" => "\Tablecompanydetail", ----type => 2
     ];
 
     public static function routes(\Slim\App $app) {
@@ -29,6 +32,6 @@ class TableListController extends Controller {
             );
         }
 
-        return $response->withJSON(\Tabletransactionmain::tableRender());
+        return $response->withJSON($classname::tableRender());
     }
 }
