@@ -8,7 +8,7 @@ class InvoiceController extends Controller
     public static function routes(\Slim\App $app) {
         $app->group('/Invoice', function (\Slim\App $route) {
                 $route->get('', "InvoiceController:list")->setName('invoice.list');
-                $route->any('/data[/{id}]', "InvoiceController:invoiceList")->setName('invoice.data');
+                // $route->any('/data[/{id}]', "InvoiceController:invoiceList")->setName('invoice.data');
                 $route->get('/form[/{id}]', "InvoiceController:invoiceForm")->setName('invoice.form');
                 $route->post('/post', "InvoiceController:invoiceSave")->setName('invoice.save');
             }
@@ -22,21 +22,6 @@ class InvoiceController extends Controller
             "table" => "invoices",
             "request" => $_REQUEST
         ]);
-    }
-    
-    public function invoiceList($request, $response, array $args = []) {
-        if (isset($args['id'])) {
-            // $invoice = \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($request->getAttribute('id'))->findOne();
-            
-            return $response->withJSON(
-                \Tabletransactionmain::findOne($args['id'])
-                // [
-                //     "data" => $invoice->toArray(),
-                // ]
-            );
-        }
-
-        return $response->withJSON(\Tabletransactionmain::tableRender());
     }
 
     public function invoiceForm($request, $response, array $args = []) {

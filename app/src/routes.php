@@ -14,6 +14,7 @@ return function (App $app) {
     $container = $app->getContainer();
     $app->group('', function () {
         \App\Controllers\MenuController::routes($this);
+        \App\Controllers\TableListController::routes($this);
         \App\Controllers\InvoiceController::routes($this);
         \App\Controllers\QuoteController::routes($this);
         \App\Controllers\CustomerController::routes($this);
