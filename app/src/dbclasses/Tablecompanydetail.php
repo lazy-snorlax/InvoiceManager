@@ -42,8 +42,8 @@ class Tablecompanydetail extends BaseTablecompanydetail
         return \TablecompanydetailQuery::create()->filterByCompanyType(1)->filterByTransactionId($pk)->findOne();
     }
 
-    public static function findAll() {
-        return \TablecompanydetailQuery::create()->filterByCompanyType(1)->find();
+    public static function findAll($type) {
+        return \TablecompanydetailQuery::create()->filterByCompanyType($type)->find();
     }
 
     public static function tableRender($type = 1) {
@@ -52,7 +52,7 @@ class Tablecompanydetail extends BaseTablecompanydetail
         global $app;
         $container = $app->getContainer();
 
-        $data['data'] = \Tablecompanydetail::findAll()->count() > 0 ? (\Tablecompanydetail::filteredArray(\Tablecompanydetail::findAll($type)->toArray())) : [];
+        $data['data'] = \Tablecompanydetail::findAll($type)->count() > 0 ? (\Tablecompanydetail::filteredArray(\Tablecompanydetail::findAll($type)->toArray())) : [];
         $data['columns'] = \Tablecompanydetail::tableColumns();
         $data['permissions'] = \Tablecompanydetail::permissions();
         $data['primarykey'] = \Tablecompanydetail::$primaryKey;

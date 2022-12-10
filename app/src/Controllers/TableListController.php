@@ -13,6 +13,12 @@ class TableListController extends Controller {
         "quotes" => "\Tabletransactionmain",
         "customers" => "\Tablecompanydetail",
         "suppliers" => "\Tablecompanydetail",
+        "expensecodes" => "\Tableexpensecode",
+        "expensegroups" => "\Tableexpensegroup",
+        "taxcodes" => "\Tabletaxcode",
+        "companytypes" => "\Tablecompanytype",
+        "credittypes" => "\Tablecredittype",
+        "transactiontypes" => "\Tabletransactiontype",
     ];
 
     public static function routes(\Slim\App $app) {
