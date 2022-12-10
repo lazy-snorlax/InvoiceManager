@@ -7,6 +7,9 @@ class MenuController extends Controller
     public static function routes(\Slim\App $app) {
         $app->group('/', function (\Slim\App $route) {
                 $route->get('', "MenuController:index")->setName('menu.home');
+                $route->group('Reports', function (\Slim\App $route) {
+                    $route->get('', "MenuController:reportmenu")->setName('reports.menu');
+                });
             }
         );
     }
@@ -16,7 +19,14 @@ class MenuController extends Controller
         return $this->view->render($response, 'menu.twig', [
             "title" => "Main Menu",
         ]);
-    }  
+    }
+
+    
+    public function reportmenu($request, $response) {
+        return $this->view->render($response, 'pages\reports.twig', [
+            'title' => "Reports Dashboard",
+        ]);
+    }
 }
 
 
