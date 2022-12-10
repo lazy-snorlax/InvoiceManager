@@ -41,8 +41,8 @@ class Tabletransactionmain extends BaseTabletransactionmain
         return \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($pk)->findOne();
     }
 
-    public static function findAll() {
-        return \TabletransactionmainQuery::create()->filterByType(1)->find();
+    public static function findAll($type = 1) {
+        return \TabletransactionmainQuery::create()->filterByType($type)->find();
     }
 
     public static function tableRender() {
@@ -51,8 +51,9 @@ class Tabletransactionmain extends BaseTabletransactionmain
         global $app;
         $container = $app->getContainer();
 
-        $data['data'] = \Tabletransactionmain::findAll()->count() > 0 ? \Tabletransactionmain::findAll()->toArray() : [];
+        $data['data'] = \Tabletransactionmain::findAll()->count() > 0 ? (\Tabletransactionmain::filteredArray(\Tabletransactionmain::findAll()->toArray())) : [];
         $data['columns'] = \Tabletransactionmain::tableColumns();
+
         $data['permissions'] = \Tabletransactionmain::permissions();
         $data['primarykey'] = \Tabletransactionmain::$primaryKey;
         $data['route'] = $container->router->pathFor(\Tabletransactionmain::$route);
@@ -69,6 +70,18 @@ class Tabletransactionmain extends BaseTabletransactionmain
         $parent['Date'] = $this->getDate() != null ? ($this->getDate())->format('d-m-Y') : "";
 
         return $parent;
+
+    }
+
+    public static function filteredArray($parent) {
+        $cols = \Tabletransactionmain::tableColumns();
+        $arr = [];
+
+        foreach ($parent as $value) {
+            $arr[] = array_filter($value, fn ($key) => in_array($key, array_column($cols, 'data')), ARRAY_FILTER_USE_KEY);
+        }
+
+        return $arr;
 
     }
 }
