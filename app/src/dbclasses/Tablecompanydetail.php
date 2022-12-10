@@ -46,19 +46,29 @@ class Tablecompanydetail extends BaseTablecompanydetail
         return \TablecompanydetailQuery::create()->filterByCompanyType(1)->find();
     }
 
-    public static function tableRender() {
+    public static function tableRender($type = 1) {
         $data = null;
 
         global $app;
         $container = $app->getContainer();
 
-        $data['data'] = \Tablecompanydetail::findAll()->count() > 0 ? \Tablecompanydetail::findAll()->toArray() : [];
+        $data['data'] = \Tablecompanydetail::findAll()->count() > 0 ? (\Tablecompanydetail::filteredArray(\Tablecompanydetail::findAll($type)->toArray())) : [];
         $data['columns'] = \Tablecompanydetail::tableColumns();
         $data['permissions'] = \Tablecompanydetail::permissions();
         $data['primarykey'] = \Tablecompanydetail::$primaryKey;
         $data['route'] = isset(\Tablecompanydetail::$route) ? $container->router->pathFor(\Tablecompanydetail::$route) : null;
 
         return $data;
+    }
+
+    public static function filteredArray($parent) {
+        $cols = \Tablecompanydetail::tableColumns();
+        $arr = [];
+
+        foreach ($parent as $value) {
+            $arr[] = array_filter($value, fn ($key) => in_array($key, array_column($cols, 'data')), ARRAY_FILTER_USE_KEY);
+        }
+        return $arr;
     }
 
 }

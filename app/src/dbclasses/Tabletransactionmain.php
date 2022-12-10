@@ -41,24 +41,34 @@ class Tabletransactionmain extends BaseTabletransactionmain
         return \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($pk)->findOne();
     }
 
-    public static function findAll($type = 1) {
+    public static function findAll($type) {
         return \TabletransactionmainQuery::create()->filterByType($type)->find();
     }
 
-    public static function tableRender() {
+    public static function tableRender($type = 1) {
         $data = null;
 
         global $app;
         $container = $app->getContainer();
 
-        $data['data'] = \Tabletransactionmain::findAll()->count() > 0 ? (\Tabletransactionmain::filteredArray(\Tabletransactionmain::findAll()->toArray())) : [];
+        $data['data'] = \Tabletransactionmain::findAll($type)->count() > 0 ? (\Tabletransactionmain::filteredArray(\Tabletransactionmain::findAll($type)->toArray())) : [];
         $data['columns'] = \Tabletransactionmain::tableColumns();
 
         $data['permissions'] = \Tabletransactionmain::permissions();
         $data['primarykey'] = \Tabletransactionmain::$primaryKey;
-        $data['route'] = $container->router->pathFor(\Tabletransactionmain::$route);
+        $data['route'] = isset(\Tabletransactionmain::$route) ? $container->router->pathFor(\Tabletransactionmain::$route) : null;
 
         return $data;
+    }
+    
+    public static function filteredArray($parent) {
+        $cols = \Tabletransactionmain::tableColumns();
+        $arr = [];
+
+        foreach ($parent as $value) {
+            $arr[] = array_filter($value, fn ($key) => in_array($key, array_column($cols, 'data')), ARRAY_FILTER_USE_KEY);
+        }
+        return $arr;
     }
 
     public function toArray(string $keyType = TableMap::TYPE_PHPNAME, bool $includeLazyLoadColumns = true, array $alreadyDumpedObjects = [], bool $includeForeignObjects = false): array {
@@ -73,15 +83,4 @@ class Tabletransactionmain extends BaseTabletransactionmain
 
     }
 
-    public static function filteredArray($parent) {
-        $cols = \Tabletransactionmain::tableColumns();
-        $arr = [];
-
-        foreach ($parent as $value) {
-            $arr[] = array_filter($value, fn ($key) => in_array($key, array_column($cols, 'data')), ARRAY_FILTER_USE_KEY);
-        }
-
-        return $arr;
-
-    }
 }

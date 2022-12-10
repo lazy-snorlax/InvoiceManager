@@ -13,8 +13,10 @@ class SupplierController extends Controller
 
     public function list($request, $response)
     {
-        return $this->view->render($response, 'menu.twig', [
-            "title" => "Suppliers"
+        return $this->view->render($response, 'list.twig', [
+            "title" => "Suppliers",
+            "table" => "suppliers",
+            "request" => $_REQUEST,
         ]);
     }  
 }

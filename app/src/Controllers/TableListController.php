@@ -10,9 +10,9 @@ class TableListController extends Controller {
 
     public const TABLE_DATA = [
         "invoices" => "\Tabletransactionmain",
-        // TODO:  "quotes" => "\Tabletransactionmain",  ----type => 2
+        "quotes" => "\Tabletransactionmain",
         "customers" => "\Tablecompanydetail",
-        // TODO:  "suppliers" => "\Tablecompanydetail", ----type => 2
+        "suppliers" => "\Tablecompanydetail",
     ];
 
     public static function routes(\Slim\App $app) {
@@ -32,6 +32,14 @@ class TableListController extends Controller {
             );
         }
 
-        return $response->withJSON($classname::tableRender());
+        if ($args['dataset'] == 'quotes') {
+            $render = $classname::tableRender(2);
+        } else if ($args['dataset'] == 'suppliers') {
+            $render = $classname::tableRender(2);
+        } else {
+            $render = $classname::tableRender();
+        }
+
+        return $response->withJSON($render);
     }
 }
