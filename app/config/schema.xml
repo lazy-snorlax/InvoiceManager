@@ -133,7 +133,7 @@
     <column name="[Type Description]" tableMapName="TypeDescription" phpName="TypeDescription" type="VARCHAR" size="100"/>
   </table>
   <table name="[Table Tax Code]" idMethod="native" phpName="Tabletaxcode">
-    <column name="[Tax Percent]" tableMapName="TaxPercent" phpName="TaxPercent" type="FLOAT" size="8" primaryKey="true" required="true"/>
+    <column name="[Tax Percent]" tableMapName="TaxPercent" phpName="TaxPercent" type="FLOAT" phpType="float" size="8" primaryKey="true" required="true"/>
     <column name="[Tax Code]" tableMapName="TaxCode" phpName="TaxCode" type="VARCHAR" size="30"/>
     <column name="[Tax Description]" tableMapName="TaxDescription" phpName="TaxDescription" type="VARCHAR" size="100"/>
   </table>
