@@ -1324,6 +1324,27 @@ class Column extends MappingModel
         return PropelTypes::isTemporalType($this->getType());
     }
 
+    
+    /**
+     * Returns whether this column is a uuid type.
+     *
+     * @return bool
+     */
+    public function isUuidType(): bool
+    {
+        return PropelTypes::isUuidType($this->getType());
+    }
+
+    /**
+     * Returns whether this column is a uuid bin type.
+     *
+     * @return bool
+     */
+    public function isUuidBinaryType(): bool
+    {
+        return $this->getType() === PropelTypes::UUID_BINARY;
+    }
+
     /**
      * Returns whether the column is an array column.
      *

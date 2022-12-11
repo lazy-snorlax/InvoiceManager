@@ -76,7 +76,8 @@ class Tabletransactionmain extends BaseTabletransactionmain
         $parent = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
         if (!$parent) return $parent;
 
-        $parent['Company'] = $this->getCompanyNo() != null ? ($this->getTablecompanydetail()->getCompanyName()) : "";
+        $parent['Company'] = $this->getCompanyNo() != null ? \TablecompanydetailQuery::create()->findOneByCompanyId($this->getCompanyNo())->getCompanyName() : "";
+
         $parent['Date'] = $this->getDate() != null ? ($this->getDate())->format('d-m-Y') : "";
 
         return $parent;
