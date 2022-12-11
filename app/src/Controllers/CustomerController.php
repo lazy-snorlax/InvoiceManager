@@ -7,6 +7,7 @@ class CustomerController extends Controller
     public static function routes(\Slim\App $app) {
         $app->group('/Customer', function (\Slim\App $route) {
                 $route->get('', "CustomerController:list")->setName('customers.list');
+                $route->get('/companies', "CustomerController:companies")->setName('companies.list');
             }
         );
     }
@@ -18,7 +19,14 @@ class CustomerController extends Controller
             "table" => "customers",
             "request" => $_REQUEST
         ]);
-    }  
+    }
+
+    public function companies($request, $response) {
+        $companies = \TablecompanydetailQuery::create()->find();
+        return $response->withJSON([
+            "companies" => $companies->toArray()
+        ]);
+    }
 }
 
 

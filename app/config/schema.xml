@@ -22,6 +22,7 @@
     <column name="City2" phpName="City2" type="VARCHAR" size="60"/>
     <column name="State2" phpName="State2" type="VARCHAR" size="6"/>
     <column name="[Post Code2]" tableMapName="PostCode2" phpName="PostCode2" type="VARCHAR" size="14"/>
+    <column name="ImgLoc" phpName="ImgLoc" type="VARCHAR" size="100"/>
   </table>
   <table name="[Table Company Detail]" idMethod="native" phpName="Tablecompanydetail">
     <column name="[Company ID]" tableMapName="CompanyId" phpName="CompanyId" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>

@@ -22,9 +22,9 @@ function InvoiceForm({ route, data, trans }) {
       const tblBusiness = await axios(route.business);
       const tblExpensecodes = await axios(route.expensecodes);
 
-      // console.log(tblTypes.data, tblCompanies.data, tblBusiness.data);
+      console.log(tblTypes.data, tblCompanies.data, tblBusiness.data);
       setInvType(tblTypes.data.data);
-      setCompanies(tblCompanies.data.data);
+      setCompanies(tblCompanies.data.companies);
       setBusiness(tblBusiness.data.data);
       setExpensecodes(tblExpensecodes.data.data);
       // console.log(invType, companies, business);

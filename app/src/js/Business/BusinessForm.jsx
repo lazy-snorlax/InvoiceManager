@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import BusinessLogo from "./BusinessLogo";
 
 function BusinessForm({ data, route }) {
   console.log("Business Form", data, route);
@@ -188,6 +189,8 @@ function BusinessForm({ data, route }) {
           </div>
         </div>
       </form>
+
+      <BusinessLogo route={route} img={data.ImgLoc} />
     </div>
   );
 }

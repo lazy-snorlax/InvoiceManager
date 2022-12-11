@@ -24,6 +24,7 @@ class UtilitiesController extends Controller
                 
                 $route->group('/Companytypes', function (\Slim\App $route) {
                     $route->get('', "UtilitiesController:CompanytypesList")->setName('companytypes.list');
+                    $route->get('/list', "UtilitiesController:CompaniesList")->setName('companies.list');
                 });
                 
                 $route->group('/Credittypes', function (\Slim\App $route) {
@@ -32,12 +33,14 @@ class UtilitiesController extends Controller
                 
                 $route->group('/Transactiontypes', function (\Slim\App $route) {
                     $route->get('', "UtilitiesController:TransactiontypesList")->setName('transactiontypes.list');
+                    $route->get('/list', "UtilitiesController:TypesList")->setName('types.list');
                 });
             }
         );
         
         $app->group('/Business', function (\Slim\App $route) {
                 $route->get('', "UtilitiesController:BusinessDetails")->setName('business.form');
+                $route->get('/list', "UtilitiesController:BusinessDetailsList")->setName('business.list');
                 $route->post('/save', "UtilitiesController:BusinessDetailsSave")->setName('business.form.save');
             }
         );
@@ -50,16 +53,26 @@ class UtilitiesController extends Controller
             "title" => "Settings Menu"
         ]);
     }
-
     
-    public function BusinessDetails($request, $response)
+    public function BusinessDetails($request, $response, array $args)
     {
-        $business = \TablebusinessdetailQuery::create()->findOneOrCreate()->toArray();
+        $business = \TablebusinessdetailQuery::create()->findOneOrCreate();
+        $business = $business->toArray();
         unset($business['Logo']);
-        
         return $this->view->render($response, 'pages\business.twig', [
             "data"=>$business,
             "title" => "Business Details"
+        ]);
+    }
+
+    
+    public function BusinessDetailsList($request, $response)
+    {
+        $business = \TablebusinessdetailQuery::create()->findOne()->toArray();
+        unset($business['Logo']);
+
+        return $response->withJSON([
+            "data"=>$business
         ]);
     }
     
@@ -69,15 +82,27 @@ class UtilitiesController extends Controller
         $return['posted'] = $request->getParsedBody();
         $business = \TablebusinessdetailQuery::create()->findOneOrCreate();
 
+        if(isset($_REQUEST['img'])) {
+            // !ddd($_FILES, $return['posted']);
+            try {
+                move_uploaded_file($_FILES['file']['tmp_name'], '..\public\img\logo.png');
+                $return['msg'] = 'Successful Upload Post';
+                $return['imgLoc'] = 'img\logo.png';
+                $business->setImgLoc('img\logo.png')->save();
+            } catch (\Throwable $th) {
+                $return['msg'] = $th->getMessage();
+            }
+            return $response->withJSON($return);
+        }
+
         try {
             $business->fromArray($return['posted'])->save();
         } catch (\Throwable $th) {
             $return['error'] = $th->getMessage() . ". \n" . $th->getPrevious();
         }
 
-        $return['email'] = $business->getEmailAddress1();
+        // $return['email'] = $business->getEmailAddress1();
 
-        
         return $response->withJSON($return);
     }
 
@@ -132,6 +157,21 @@ class UtilitiesController extends Controller
             "title" => "Transaction Types",
             "table" => "transactiontypes",
             "request" => $_REQUEST,
+        ]);
+    }
+    
+    public function TypesList($request, $response)
+    {
+        $types = \TabletransactiontypeQuery::create()->find();
+        return $response->withJSON([
+            "data" => $types->toArray()
+        ]);
+    }
+
+    public function CompaniesList($request, $response){
+        $companies = \TablecompanydetailQuery::create()->find();
+        return $response->withJSON([
+            "data" => $companies->toArray()
         ]);
     }
 
