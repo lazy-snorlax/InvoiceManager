@@ -54,7 +54,7 @@ export default class DataTable extends React.Component {
   render() {
     return (
       <div className="container">
-        <table ref={(el) => (this.el = el)} className="w-full" />
+        <table ref={(el) => (this.el = el)} className="table-auto w-full" />
       </div>
     );
   }

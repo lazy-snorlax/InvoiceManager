@@ -37,7 +37,8 @@ class UtilitiesController extends Controller
         );
         
         $app->group('/Business', function (\Slim\App $route) {
-                $route->get('', "UtilitiesController:BusinessDetails")->setName('business.list');
+                $route->get('', "UtilitiesController:BusinessDetails")->setName('business.form');
+                $route->post('/save', "UtilitiesController:BusinessDetailsSave")->setName('business.form.save');
             }
         );
 
@@ -53,12 +54,31 @@ class UtilitiesController extends Controller
     
     public function BusinessDetails($request, $response)
     {
-        $business = \TablebusinessdetailQuery::create()->findOne()->toArray();
+        $business = \TablebusinessdetailQuery::create()->findOneOrCreate()->toArray();
         unset($business['Logo']);
         
-        return $response->withJSON([
-            "data"=>$business
+        return $this->view->render($response, 'pages\business.twig', [
+            "data"=>$business,
+            "title" => "Business Details"
         ]);
+    }
+    
+    public function BusinessDetailsSave($request, $response, array $args)
+    {
+        $return = [];
+        $return['posted'] = $request->getParsedBody();
+        $business = \TablebusinessdetailQuery::create()->findOneOrCreate();
+
+        try {
+            $business->fromArray($return['posted'])->save();
+        } catch (\Throwable $th) {
+            $return['error'] = $th->getMessage() . ". \n" . $th->getPrevious();
+        }
+
+        $return['email'] = $business->getEmailAddress1();
+
+        
+        return $response->withJSON($return);
     }
 
     public function ExpensecodeList($request, $response)

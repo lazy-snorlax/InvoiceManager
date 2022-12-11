@@ -111,6 +111,15 @@ function setUpColumns(columns, isEdit = true, isDelete = true, route = null) {
             };
             break;
 
+          case "percent":
+            col.render = (data, type, row, meta) => {
+              let d = Number(data);
+              return renderToString(
+                <span className="right">{(d * 100).toFixed(2)}%</span>
+              );
+            };
+            break;
+
           default:
             col.render = (data, type, row, meta) => {
               return renderToString(<span className="left">{data}</span>);

@@ -8,6 +8,7 @@ module.exports = {
     MainMenu: "./app/src/js/Menu/Menu.jsx",
     TableList: "./app/src/js/TableList/TableList.jsx",
     Invoice: "./app/src/js/Invoice/Invoice.jsx",
+    Business: "./app/src/js/Business/Business.jsx",
   },
   mode: "development",
   devtool: "inline-source-map",

@@ -1,4 +1,16 @@
-<form data-name="Tablebusinessdetail">
+{% extends "root.twig" %}
+
+{% block body %}
+
+<div class="container mx-auto">
+
+    <div id="BusinessDetails" data-d="{{ data|json_encode }}" data-route="{{ path_for('business.form.save') }}"></div>
+
+</div>
+
+
+
+{# <form data-name="Tablebusinessdetail">
     <div class="form-group d-flex" hidden>
         <label class="col-form-label col-md-3 text-right" for="BusinessId">Business Id</label>
         <input class="form-control" type="number" disabled name="BusinessId" data-type="integer" required="required" />
@@ -83,4 +95,12 @@
         <label class="col-form-label col-md-3 text-right" for="PostCode2">Post Code2</label>
         <input type="input" class="form-control" name="PostCode2" data-type="varchar"  >
     </div>
-</form>
+</form> #}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{{ base_url() }}/dist/Business.bundle.js?q={{random()}}"></script>
+
+{% endblock %}
