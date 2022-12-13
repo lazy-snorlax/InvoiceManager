@@ -105,7 +105,9 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
           <label className="input-group">
             <span>$</span>
             <input
-              type="text"
+              type="number"
+              step=".01"
+              disabled="true"
               name="ItemGST"
               id="ItemGST"
               className="input input-bordered w-full text-right"
@@ -120,7 +122,9 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
           <label className="input-group">
             <span>$</span>
             <input
-              type="text"
+              type="number"
+              step=".01"
+              disabled="true"
               name="ItemGST"
               id="ItemGST"
               className="input input-bordered w-full text-right"
@@ -135,7 +139,9 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
           <label className="input-group">
             <span>$</span>
             <input
-              type="text"
+              type="number"
+              step=".01"
+              disabled="true"
               name="ItemGST"
               id="ItemGST"
               className="input input-bordered w-full text-right"
