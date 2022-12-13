@@ -97,7 +97,7 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
       />
 
       <div className="mt-4 flex space-x-4 text-right">
-        <div className="w-6/12"></div>
+        <div className="w-8/12"></div>
         <div className="mb-4 w-2/12">
           <label htmlFor="ItemGST" className="label">
             Item GST
