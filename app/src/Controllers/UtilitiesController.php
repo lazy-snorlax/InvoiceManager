@@ -12,6 +12,7 @@ class UtilitiesController extends Controller
                 
                 $route->group('/Expensecodes', function (\Slim\App $route) {
                     $route->get('', "UtilitiesController:ExpensecodeList")->setName('expensecodes.list');
+                    $route->get('/data', "UtilitiesController:Expensecodes")->setName('expensecodes.data.list');
                 });
                 
                 $route->group('/Expensegroups', function (\Slim\App $route) {
@@ -112,6 +113,15 @@ class UtilitiesController extends Controller
             "title" => "Expense Codes",
             "table" => "expensecodes",
             "request" => $_REQUEST,
+        ]);
+    }
+
+    public function Expensecodes($request, $response)
+    {
+        $expCodes = \TableexpensecodeQuery::create()->find();
+
+        return $response->withJSON([
+            "data" => $expCodes->toArray()
         ]);
     }
 

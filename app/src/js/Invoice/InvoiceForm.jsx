@@ -10,7 +10,7 @@ function InvoiceForm({ route, data, trans }) {
   const [invType, setInvType] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [business, setBusiness] = useState([]);
-  const [expensecodes, setExpensecodes] = useState([]);
+  // const [expensecodes, setExpensecodes] = useState([]);
   const [startDate, setStartDate] = useState();
 
   // console.log(">>> Routes", route);
@@ -20,13 +20,13 @@ function InvoiceForm({ route, data, trans }) {
       const tblCompanies = await axios(route.companies);
       const tblTypes = await axios(route.types);
       const tblBusiness = await axios(route.business);
-      const tblExpensecodes = await axios(route.expensecodes);
+      // const tblExpensecodes = await axios(route.expensecodes);
 
-      console.log(tblTypes.data, tblCompanies.data, tblBusiness.data);
+      // console.log(tblTypes.data, tblCompanies.data, tblBusiness.data);
       setInvType(tblTypes.data.data);
       setCompanies(tblCompanies.data.companies);
       setBusiness(tblBusiness.data.data);
-      setExpensecodes(tblExpensecodes.data.data);
+      // setExpensecodes(tblExpensecodes.data.data);
       // console.log(invType, companies, business);
     };
 
@@ -190,10 +190,11 @@ function InvoiceForm({ route, data, trans }) {
           </div>
         </div>
 
-        <InvoiceTransHeader trans={trans} />
-        <br />
-        <br />
-        <InvoiceTransLines trans={trans} expensecodes={expensecodes} />
+        <InvoiceTransHeader
+          trans={trans}
+          route={route.lines}
+          routeExpcodes={route.expensecodes}
+        />
       </form>
     </div>
   );

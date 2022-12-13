@@ -10,6 +10,7 @@ class InvoiceController extends Controller
                 $route->get('', "InvoiceController:list")->setName('invoice.list');
                 // $route->any('/data[/{id}]', "InvoiceController:invoiceList")->setName('invoice.data');
                 $route->get('/form[/{id}]', "InvoiceController:invoiceForm")->setName('invoice.form');
+                $route->get('/data[/{id}]', "InvoiceController:invoiceLines")->setName('invoice.data.lines');
                 $route->post('/post', "InvoiceController:invoiceSave")->setName('invoice.save');
             }
         );
@@ -39,10 +40,23 @@ class InvoiceController extends Controller
                 "companies" => $this->router->pathFor('companies.list'),
                 "types" => $this->router->pathFor('types.list'),
                 "business" => $this->router->pathFor('business.list'),
-                "expensecodes" => $this->router->pathFor('expensecodes.list'),
+                "expensecodes" => $this->router->pathFor('expensecodes.data.list'),
+                "lines" => $this->router->pathFor('invoice.data.lines'),
             ]
         ]);
         return $response;    
+    }
+
+    public function invoiceLines($request, $response) {
+        $line = \TabletransactionitemsQuery::create()->filterByTitleItem($_REQUEST['id'])->find();
+
+        if ($line ==  null) {
+            $line = new \Tabletransactionitems();
+        }
+
+        return $response->withJSON([
+            "lines" => $line->toArray(),
+        ]);
     }
 
     public function invoiceSave ($request, $response) {

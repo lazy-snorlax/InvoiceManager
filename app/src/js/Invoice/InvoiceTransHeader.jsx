@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import InvoiceTransLines from "./InvoiceTransLines";
 
-function InvoiceTransHeader({ trans }) {
-  //   console.log(">>> Transactions", trans, route);
+function InvoiceTransHeader({ trans, route, routeExpcodes }) {
+  // console.log(">>> ", trans, route);
+  const [id, setId] = useState();
+  const [tranlines, setLines] = useState([]);
 
   //   useEffect(() => {
   //     async function fetchData() {
   //       console.log(">>> ExpenseCodes", tblExpensecodes.data);
   //     }
-
   //     fetchData();
   //   }, []);
 
@@ -17,15 +19,18 @@ function InvoiceTransHeader({ trans }) {
     translines.forEach((ele) => {
       if (ele.dataset.headid != rowId) {
         ele.setAttribute("hidden", true);
-        // ele.classList.remove("active");
       } else {
         ele.removeAttribute("hidden");
-        // ele.classList.add("active");
       }
     });
   };
 
-  filterRows(trans[0].TitleNo);
+  async function fetchLines(lineId) {
+    // console.log(">>> fetchLines", lineId);
+    const tblLines = await axios(route + "?id=" + lineId);
+    console.log(">>> tblLines", tblLines.data.lines);
+    setLines(tblLines.data.lines);
+  }
 
   return (
     <>
@@ -52,9 +57,7 @@ function InvoiceTransHeader({ trans }) {
                 className="hover"
                 key={tran.TitleNo}
                 onClick={() => {
-                  // row.classList.remove("active");
-                  filterRows(tran.TitleNo);
-                  // row.classList.add("active");
+                  fetchLines(tran.TitleNo);
                 }}
               >
                 <td>{tran.TitleNo}</td>
@@ -64,6 +67,16 @@ function InvoiceTransHeader({ trans }) {
           </tbody>
         </table>
       </div>
+
+      <br />
+      <br />
+
+      <InvoiceTransLines
+        lineId={id}
+        route={route}
+        lines={tranlines}
+        routeExpcodes={routeExpcodes}
+      />
     </>
   );
 }

@@ -1,8 +1,22 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import InvoiceTransLine from "./InvoiceTransLine";
 
-function InvoiceTransLines({ trans, expensecodes }) {
-  // console.log(">>> Transactions", trans);
+function InvoiceTransLines({ route, lines, routeExpcodes }) {
+  // console.log(">>> InvoiceTransLines", route, lines, routeExpcodes);
+  // const [tranlines, setLines] = useState(lines);
+  const [expensecodes, setExpensecodes] = useState([]);
+
+  useEffect(() => {
+    async function tblExpensecodes() {
+      await axios(routeExpcodes).then((res) => {
+        setExpensecodes(res.data.data);
+        console.log(expensecodes, routeExpcodes);
+      });
+    }
+    tblExpensecodes();
+  }, []);
+
   return (
     <div className="overflow-x-auto">
       <table className="table table-normal w-full" id="translines">
@@ -26,17 +40,15 @@ function InvoiceTransLines({ trans, expensecodes }) {
           </tr>
         </thead>
         <tbody>
-          {trans.map((tran) => {
-            console.log(">>> Transactions", tran);
-            tran.Lines.map((line) => {
-              console.log(">>> Lines", line);
+          {lines.map((line) => {
+            // console.log(">>> Line", line);
+            return (
               <InvoiceTransLine
-                tran={tran}
-                line={line}
                 key={line.Id}
+                line={line}
                 expensecodes={expensecodes}
-              />;
-            });
+              />
+            );
           })}
         </tbody>
       </table>

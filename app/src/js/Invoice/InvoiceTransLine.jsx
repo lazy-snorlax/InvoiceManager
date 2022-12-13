@@ -1,18 +1,18 @@
 import React from "react";
 
-function InvoiceTransLine({ tran, line, expensecodes }) {
-  console.log("InvoiceTransLine");
+function InvoiceTransLine({ line, expensecodes }) {
+  console.log(">>> InvoiceTransLine", line, expensecodes);
   return (
     <>
-      <tr className="hover" data-headid={tran.TitleNo}>
-        <td>{tran.TitleNo}</td>
+      <tr className="hover" data-headid={line.TitleItem}>
+        <td>{line.TitleItem}</td>
         <td>{line.Item}</td>
         <td>
           <textarea
             className="textarea textarea-bordered w-full"
             name=""
             id=""
-            rows="2"
+            rows="3"
             defaultValue={line.Description}
           ></textarea>
         </td>
@@ -25,10 +25,12 @@ function InvoiceTransLine({ tran, line, expensecodes }) {
         <td>
           <label className="input-group">
             <span>$</span>
-            <input
+            <span
               className="cost input input-bordered w-full text-right"
               defaultValue={parseFloat(line.Credit).toFixed(2)}
-            />
+            >
+              {parseFloat(line.Credit).toFixed(2)}
+            </span>
           </label>
         </td>
         <td>
