@@ -32,10 +32,21 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
     setLines(tblLines.data.lines);
   }
 
+  function toggleActive(e) {
+    let activeRow = e.target;
+    activeRow = activeRow.closest("tr");
+    console.log(activeRow);
+    let previousRow = document.querySelector("#transheader tr.active");
+    if (previousRow && previousRow.classList.contains("active")) {
+      previousRow.classList.toggle("active");
+    }
+    activeRow.classList.toggle("active");
+  }
+
   return (
     <>
-      <div className="overflow-x-auto">
-        <table className="table table-normal w-full">
+      <div className="overflow-x-auto h-60">
+        <table className="table table-normal w-full" id="transheader">
           <thead>
             <tr>
               <th>No</th>
@@ -56,7 +67,8 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
               <tr
                 className="hover"
                 key={tran.TitleNo}
-                onClick={() => {
+                onClick={(e) => {
+                  toggleActive(e);
                   fetchLines(tran.TitleNo);
                 }}
               >
@@ -68,7 +80,6 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
         </table>
       </div>
 
-      <br />
       <br />
 
       <InvoiceTransLines
