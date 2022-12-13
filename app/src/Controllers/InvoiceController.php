@@ -48,14 +48,23 @@ class InvoiceController extends Controller
     }
 
     public function invoiceLines($request, $response) {
-        $line = \TabletransactionitemsQuery::create()->filterByTitleItem($_REQUEST['id'])->find();
+        $lines = \TabletransactionitemsQuery::create()->filterByTitleItem($_REQUEST['id'])->find();
 
-        if ($line ==  null) {
-            $line = new \Tabletransactionitems();
+        if ($lines ==  null) {
+            $lines = new \Tabletransactionitems();
         }
 
+        $lines = $lines->toArray();
+
+        $gst = array_sum(array_column($lines, 'GstCollected'));
+        $credit = array_sum(array_column($lines, 'Credit'));
+        $total = $gst + $credit;
+
         return $response->withJSON([
-            "lines" => $line->toArray(),
+            "lines" => $lines,
+            "gstTotal" => $gst,
+            "creditTotal" => $credit,
+            "total" => $total,
         ]);
     }
 

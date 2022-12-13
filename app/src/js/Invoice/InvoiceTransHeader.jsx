@@ -6,6 +6,9 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
   // console.log(">>> ", trans, route);
   const [id, setId] = useState();
   const [tranlines, setLines] = useState([]);
+  const [gst, setGst] = useState();
+  const [credit, setCredit] = useState();
+  const [total, setTotal] = useState();
 
   //   useEffect(() => {
   //     async function fetchData() {
@@ -30,6 +33,10 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
     const tblLines = await axios(route + "?id=" + lineId);
     console.log(">>> tblLines", tblLines.data.lines);
     setLines(tblLines.data.lines);
+    setGst(tblLines.data.gstTotal);
+    setCredit(tblLines.data.creditTotal);
+    setTotal(tblLines.data.total);
+    console.log(total);
   }
 
   function toggleActive(e) {
@@ -88,6 +95,55 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
         lines={tranlines}
         routeExpcodes={routeExpcodes}
       />
+
+      <div className="mt-4 flex space-x-4 text-right">
+        <div className="w-6/12"></div>
+        <div className="mb-4 w-2/12">
+          <label htmlFor="ItemGST" className="label">
+            Item GST
+          </label>
+          <label className="input-group">
+            <span>$</span>
+            <input
+              type="text"
+              name="ItemGST"
+              id="ItemGST"
+              className="input input-bordered w-full text-right"
+              defaultValue={gst}
+            />
+          </label>
+        </div>
+        <div className="mb-4 w-2/12">
+          <label htmlFor="ItemGST" className="label">
+            Item Excl Total
+          </label>
+          <label className="input-group">
+            <span>$</span>
+            <input
+              type="text"
+              name="ItemGST"
+              id="ItemGST"
+              className="input input-bordered w-full text-right"
+              defaultValue={credit}
+            />
+          </label>
+        </div>
+        <div className="mb-4 w-2/12">
+          <label htmlFor="ItemGST" className="label">
+            Item Incl Total
+          </label>
+          <label className="input-group">
+            <span>$</span>
+            <input
+              type="text"
+              name="ItemGST"
+              id="ItemGST"
+              className="input input-bordered w-full text-right"
+              defaultValue={total}
+            />
+          </label>
+        </div>
+      </div>
     </>
   );
 }

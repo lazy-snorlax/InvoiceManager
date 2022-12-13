@@ -1,10 +1,17 @@
 import React from "react";
 
 function InvoiceTransLine({ line, expensecodes }) {
-  console.log(">>> InvoiceTransLine", line, expensecodes);
+  // console.log(">>> InvoiceTransLine", line, expensecodes);
+
+  function updateGst(e) {
+    let elem = e.target;
+    let tr = elem.closest("tr");
+    console.log(">>> Changed Cost", tr);
+  }
+
   return (
     <>
-      <tr className="hover" data-headid={line.TitleItem}>
+      <tr className="hover" data-headid={line.Id}>
         <td>{line.TitleItem}</td>
         <td>{line.Item}</td>
         <td>
@@ -12,11 +19,14 @@ function InvoiceTransLine({ line, expensecodes }) {
             className="textarea textarea-bordered w-full"
             name=""
             id=""
-            rows="3"
+            rows="2"
             defaultValue={line.Description}
           ></textarea>
         </td>
-        <td>{(parseFloat(line.Tax) * 100).toFixed(2)}%</td>
+        <td>
+          <span className="tax">{(parseFloat(line.Tax) * 100).toFixed(2)}</span>
+          %
+        </td>
         <td>
           <span className="money">
             {parseFloat(line.GstCollected).toFixed(2)}
@@ -25,12 +35,13 @@ function InvoiceTransLine({ line, expensecodes }) {
         <td>
           <label className="input-group">
             <span>$</span>
-            <span
+            <input
               className="cost input input-bordered w-full text-right"
+              type="number"
+              step=".01"
               defaultValue={parseFloat(line.Credit).toFixed(2)}
-            >
-              {parseFloat(line.Credit).toFixed(2)}
-            </span>
+              onChange={(e) => updateGst(e)}
+            />
           </label>
         </td>
         <td>

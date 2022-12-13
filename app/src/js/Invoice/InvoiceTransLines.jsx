@@ -18,7 +18,7 @@ function InvoiceTransLines({ route, lines, routeExpcodes }) {
   }, []);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto h-64">
       <table className="table table-normal w-full" id="translines">
         <thead>
           <tr>
