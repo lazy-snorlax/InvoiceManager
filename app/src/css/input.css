@@ -34,3 +34,9 @@ table.dataTable .center {
 #translines :where(th, td) {
   padding: 0.5rem;
 }
+
+#transheader :where(th),
+#translines :where(th) {
+  position: sticky;
+  top: 0px;
+}

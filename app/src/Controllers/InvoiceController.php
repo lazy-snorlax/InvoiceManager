@@ -70,9 +70,19 @@ class InvoiceController extends Controller
 
         if ($lines ==  null) {
             $lines = new \Tabletransactionitems();
-        }
+        } 
 
         $lines = $lines->toArray();
+                
+        if (isset($_REQUEST['newline'])) {
+            $new = new \Tabletransactionitems();
+            $new->setTitleItem($_REQUEST['id']);
+            $new->setTax(0);
+            $new->setGstCollected(0);
+            $new->setCredit(0);
+
+            $lines[] = $new->toArray();
+        }
 
         $gst = array_sum(array_column($lines, 'GstCollected'));
         $credit = array_sum(array_column($lines, 'Credit'));
@@ -88,7 +98,6 @@ class InvoiceController extends Controller
 
     public function invoiceSave ($request, $response) {
         $res['posted'] = $request->getParsedBody();
-
         try {
             if (isset($res['posted']['TransactionId'])) {
                 $invoice = \TabletransactionmainQuery::create()->filterByTransactionId($res['posted']['TransactionId'])->findOne();
@@ -101,30 +110,23 @@ class InvoiceController extends Controller
         } catch (\Throwable $th) {
             $res['error'] = $th->getMessage() . "\n" . $th->getPrevious();
         }
-        
-
         return $response->withJSON($res);
     }
     
     public function invoiceTransTitleSave($request, $response) {
         $res['posted'] = $request->getParsedBody();
-
         try {
             $invoiceTitle = \TabletransactionitemstitleQuery::create()->filterByTitleNo($res['posted']['id'])->findOne();
             unset($res['posted']['id']);
-            
             if ($invoiceTitle == null){
                 $invoiceTitle = new \Tabletransactionitemstitle();
             }
-            
             $invoiceTitle->fromArray($res['posted']);
             $invoiceTitle->save();
-            
             $res['data'] = $invoiceTitle->toArray();
         } catch (\Throwable $th) {
             $res['error'] = $th->getMessage() . "\n" . $th->getPrevious();
         }
-
         $titles = \TabletransactionitemstitleQuery::create()->filterByTransactionno($res['posted']['Transactionno'])->find();
         $res['titles'] = $titles->toArray();
         return $response->withJSON($res);

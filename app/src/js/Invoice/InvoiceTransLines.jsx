@@ -25,7 +25,18 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
     fetchData(lineId);
   }, [lineId]);
 
-  function appendRow() {}
+  async function appendRow() {
+    await axios(route.lines + "?id=" + lineId + "&newline=true").then((res) => {
+      console.log(res);
+      setLines(res.data.lines);
+    });
+  }
+
+  function saveRow(e) {
+    let tr = e.target.closest("tr");
+    console.log(tr);
+    // await axios(route.itemsave, )
+  }
 
   return (
     <>
@@ -46,6 +57,7 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
                   className="btn btn-primary"
                   onClick={() => {
                     console.log("new line btn clicked");
+                    appendRow();
                   }}
                 >
                   +
