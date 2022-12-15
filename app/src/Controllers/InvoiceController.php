@@ -12,6 +12,8 @@ class InvoiceController extends Controller
                 $route->get('/form[/{id}]', "InvoiceController:invoiceForm")->setName('invoice.form');
                 $route->get('/data[/{id}]', "InvoiceController:invoiceLines")->setName('invoice.data.lines');
                 $route->post('/post', "InvoiceController:invoiceSave")->setName('invoice.save');
+                $route->post('/title/post', "InvoiceController:invoiceTransTitleSave")->setName('invoice.title.save');
+                $route->post('/item/post', "InvoiceController:invoiceTransItemSave")->setName('invoice.item.save');
             }
         );
     }
@@ -37,6 +39,8 @@ class InvoiceController extends Controller
             "transactions" => $invHeader->toArray(),
             "routes" => [
                 "save" => $this->router->pathFor('invoice.save'),
+                "titlesave" => $this->router->pathFor('invoice.title.save'),
+                "itemsave" => $this->router->pathFor('invoice.item.save'),
                 "companies" => $this->router->pathFor('companies.list'),
                 "types" => $this->router->pathFor('types.list'),
                 "business" => $this->router->pathFor('business.list'),
@@ -69,9 +73,33 @@ class InvoiceController extends Controller
     }
 
     public function invoiceSave ($request, $response) {
-        return $response->withJSON([
-            "msg" => "Successful POST"
-        ]);
+        $res['posted'] = $request->getParsedBody();
+
+        try {
+            if (isset($res['posted']['TransactionId'])) {
+                $invoice = \TabletransactionmainQuery::create()->filterByTransactionId($res['posted']['TransactionId'])->findOne();
+                
+                $invoice->fromArray($res['posted'])->save();
+                $res['data'] = $invoice->toArray();
+
+                $res['msg'] = "Successful POST";
+            }
+        } catch (\Throwable $th) {
+            $res['error'] = $th->getMessage() . "\n" . $th->getPrevious();
+        }
+        
+
+        return $response->withJSON($res);
+    }
+    
+    public function invoiceTransTitleSave($request, $response) {
+        $res['posted'] = $request->getParsedBody();
+        return $response->withJSON($res);
+    }
+    
+    public function invoiceTransItemSave($request, $response) {
+        $res['posted'] = $request->getParsedBody();
+        return $response->withJSON($res);
     }
 }
 

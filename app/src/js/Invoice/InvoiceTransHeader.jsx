@@ -9,6 +9,7 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
   const [gst, setGst] = useState();
   const [credit, setCredit] = useState();
   const [total, setTotal] = useState();
+  const [head, setHead] = useState({ id: "", text: "" });
 
   //   useEffect(() => {
   //     async function fetchData() {
@@ -59,13 +60,15 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
               <th>No</th>
               <th>TitleDescription</th>
               <th className="text-right">
-                <button
-                  type="button"
+                <label
+                  htmlFor="invoiceTransHead"
                   className="btn btn-primary"
-                  onClick={() => console.log("new head btn clicked")}
+                  onClick={() => {
+                    setHead({ id: "0", text: "" });
+                  }}
                 >
                   +
-                </button>
+                </label>
               </th>
             </tr>
           </thead>
@@ -78,6 +81,13 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
                   toggleActive(e);
                   fetchLines(tran.TitleNo);
                 }}
+                onDoubleClick={(e) => {
+                  document.querySelector("#invoiceTransHead").click();
+                  let id = e.target.closest("tr").children[0].innerText;
+                  let text = e.target.closest("tr").children[1].innerText;
+                  console.log("Target", text);
+                  setHead({ id: id, text: text });
+                }}
               >
                 <td>{tran.TitleNo}</td>
                 <td colSpan={2}>{tran.TitleDescription}</td>
@@ -85,6 +95,34 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <input type="checkbox" id="invoiceTransHead" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box">
+          <label
+            htmlFor="invoiceTransHead"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            ✕
+          </label>
+          <h3 className="font-bold text-lg">Enter New Address:</h3>
+          <div className="py-4 w-full">
+            <label htmlFor="" className="label">
+              New Address
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              defaultValue={head.text}
+            />
+          </div>
+          <div className="modal-action">
+            <label htmlFor="invoiceTransHead" className="btn btn-primary">
+              Save
+            </label>
+          </div>
+        </div>
       </div>
 
       <br />
@@ -107,7 +145,7 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
             <input
               type="number"
               step=".01"
-              disabled="true"
+              disabled
               name="ItemGST"
               id="ItemGST"
               className="input input-bordered w-full text-right"
@@ -124,7 +162,7 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
             <input
               type="number"
               step=".01"
-              disabled="true"
+              disabled
               name="ItemGST"
               id="ItemGST"
               className="input input-bordered w-full text-right"
@@ -141,7 +179,7 @@ function InvoiceTransHeader({ trans, route, routeExpcodes }) {
             <input
               type="number"
               step=".01"
-              disabled="true"
+              disabled
               name="ItemGST"
               id="ItemGST"
               className="input input-bordered w-full text-right"

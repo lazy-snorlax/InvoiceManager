@@ -33,9 +33,30 @@ function InvoiceForm({ route, data, trans }) {
     fetchData();
   }, []);
 
+  const saveOnChange = () => {
+    let form = document.querySelector("#invoiceHead");
+    let formData = new FormData(form);
+
+    axios
+      .post(route.save, formData)
+      .then((response) => {
+        console.log(response);
+        if (response.error) {
+          alert(response.error);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
-      <form data-name="Tabletransactionmain">
+      <form
+        data-name="Tabletransactionmain"
+        id="invoiceHead"
+        onChange={saveOnChange}
+      >
         <div className="flex space-x-4">
           <div className="mb-4 w-1/4" hidden>
             <label className="label" htmlFor="TransactionId">
@@ -44,7 +65,6 @@ function InvoiceForm({ route, data, trans }) {
             <input
               className="input input-bordered w-full"
               type="number"
-              disabled
               name="TransactionId"
               data-type="integer"
               required="required"

@@ -84,4 +84,13 @@ class Tabletransactionmain extends BaseTabletransactionmain
 
     }
 
+    public function fromArray(array $arr, string $keyType = TableMap::TYPE_PHPNAME) {
+        if (isset($arr['Date'])) {
+            $arr['Date'] = explode('-', $arr['Date']);
+            $arr['Date'] = implode('-', array_reverse($arr['Date']));
+        }
+
+        return parent::fromArray($arr, $keyType);
+    }
+
 }
