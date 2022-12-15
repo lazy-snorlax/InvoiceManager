@@ -39,6 +39,17 @@ function InvoiceTransHeader({ transid, trans, route }) {
     setTotal(tblLines.data.total);
   }
 
+  async function loadTranLines(lineId) {
+    return (
+      <InvoiceTransLines
+        lineId={lineId}
+        route={route}
+        lines={tranlines}
+        routeExpcodes={route.expensecodes}
+      />
+    );
+  }
+
   function toggleActive(e) {
     let activeRow = e.target;
     activeRow = activeRow.closest("tr");
@@ -99,8 +110,9 @@ function InvoiceTransHeader({ transid, trans, route }) {
                   toggleActive(e);
                   let id = e.target.closest("tr").children[0].innerText;
                   let text = e.target.closest("tr").children[1].innerText;
+                  setId(id);
                   setHead({ id: id, text: text });
-                  fetchTranLines(tran.TitleNo);
+                  // loadTranLines(tran.TitleNo);
                 }}
                 onDoubleClick={(e) => {
                   // console.log("Target", text);
@@ -156,66 +168,11 @@ function InvoiceTransHeader({ transid, trans, route }) {
       <br />
 
       <InvoiceTransLines
-        lineId={id}
+        lineId={id != undefined ? id : 0}
         route={route}
         lines={tranlines}
         routeExpcodes={route.expensecodes}
       />
-
-      <div className="mt-4 flex space-x-4 text-right">
-        <div className="w-8/12"></div>
-        <div className="mb-4 w-2/12">
-          <label htmlFor="ItemGST" className="label">
-            Item GST
-          </label>
-          <label className="input-group">
-            <span>$</span>
-            <input
-              type="number"
-              step=".01"
-              disabled
-              name="ItemGST"
-              id="ItemGST"
-              className="input input-bordered w-full text-right"
-              defaultValue={gst}
-            />
-          </label>
-        </div>
-        <div className="mb-4 w-2/12">
-          <label htmlFor="ItemGST" className="label">
-            Item Excl Total
-          </label>
-          <label className="input-group">
-            <span>$</span>
-            <input
-              type="number"
-              step=".01"
-              disabled
-              name="ItemGST"
-              id="ItemGST"
-              className="input input-bordered w-full text-right"
-              defaultValue={credit}
-            />
-          </label>
-        </div>
-        <div className="mb-4 w-2/12">
-          <label htmlFor="ItemGST" className="label">
-            Item Incl Total
-          </label>
-          <label className="input-group">
-            <span>$</span>
-            <input
-              type="number"
-              step=".01"
-              disabled
-              name="ItemGST"
-              id="ItemGST"
-              className="input input-bordered w-full text-right"
-              defaultValue={total}
-            />
-          </label>
-        </div>
-      </div>
     </>
   );
 }

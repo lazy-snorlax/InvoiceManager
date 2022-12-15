@@ -118,9 +118,6 @@ class InvoiceController extends Controller
             }
             
             $invoiceTitle->fromArray($res['posted']);
-            // !ddd($res['posted'], $invoiceTitle->toArray());
-            // $invoiceTitle->setTransactionno($res['posted']['transid']);
-            // $invoiceTitle->setTitleDescription($res['posted']['title']);
             $invoiceTitle->save();
             
             $res['data'] = $invoiceTitle->toArray();
