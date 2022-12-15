@@ -10,7 +10,8 @@ class InvoiceController extends Controller
                 $route->get('', "InvoiceController:list")->setName('invoice.list');
                 // $route->any('/data[/{id}]', "InvoiceController:invoiceList")->setName('invoice.data');
                 $route->get('/form[/{id}]', "InvoiceController:invoiceForm")->setName('invoice.form');
-                $route->get('/data[/{id}]', "InvoiceController:invoiceLines")->setName('invoice.data.lines');
+                $route->get('/lines[/{id}]', "InvoiceController:invoiceLines")->setName('invoice.data.lines');
+                $route->get('/head[/{id}]', "InvoiceController:invoiceHead")->setName('invoice.data.head');
                 $route->post('/post', "InvoiceController:invoiceSave")->setName('invoice.save');
                 $route->post('/title/post', "InvoiceController:invoiceTransTitleSave")->setName('invoice.title.save');
                 $route->post('/item/post', "InvoiceController:invoiceTransItemSave")->setName('invoice.item.save');
@@ -46,9 +47,22 @@ class InvoiceController extends Controller
                 "business" => $this->router->pathFor('business.list'),
                 "expensecodes" => $this->router->pathFor('expensecodes.data.list'),
                 "lines" => $this->router->pathFor('invoice.data.lines'),
+                "head" => $this->router->pathFor('invoice.data.head'),
             ]
         ]);
         return $response;    
+    }
+
+    public function invoiceHead($request, $response) {
+        $head = \TabletransactionitemstitleQuery::create()->filterByTransactionno($_REQUEST['id'])->find();
+
+        if ($head ==  null) {
+            $head = new \Tabletransactionitemstitle();
+        }
+        $head = $head->toArray();
+        return $response->withJSON([
+            "head" => $head,
+        ]);
     }
 
     public function invoiceLines($request, $response) {
@@ -94,6 +108,28 @@ class InvoiceController extends Controller
     
     public function invoiceTransTitleSave($request, $response) {
         $res['posted'] = $request->getParsedBody();
+
+        try {
+            $invoiceTitle = \TabletransactionitemstitleQuery::create()->filterByTitleNo($res['posted']['id'])->findOne();
+            unset($res['posted']['id']);
+            
+            if ($invoiceTitle == null){
+                $invoiceTitle = new \Tabletransactionitemstitle();
+            }
+            
+            $invoiceTitle->fromArray($res['posted']);
+            // !ddd($res['posted'], $invoiceTitle->toArray());
+            // $invoiceTitle->setTransactionno($res['posted']['transid']);
+            // $invoiceTitle->setTitleDescription($res['posted']['title']);
+            $invoiceTitle->save();
+            
+            $res['data'] = $invoiceTitle->toArray();
+        } catch (\Throwable $th) {
+            $res['error'] = $th->getMessage() . "\n" . $th->getPrevious();
+        }
+
+        $titles = \TabletransactionitemstitleQuery::create()->filterByTransactionno($res['posted']['Transactionno'])->find();
+        $res['titles'] = $titles->toArray();
         return $response->withJSON($res);
     }
     

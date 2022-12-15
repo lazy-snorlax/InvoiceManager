@@ -1,9 +1,7 @@
 import React from "react";
-import { useState, setState, useEffect } from "react";
-import { renderToString } from "react-dom/server";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import InvoiceTransHeader from "./InvoiceTransHeader";
-import InvoiceTransLines from "./InvoiceTransLines";
 
 function InvoiceForm({ route, data, trans }) {
   // console.log(data, trans);
@@ -209,13 +207,13 @@ function InvoiceForm({ route, data, trans }) {
             />
           </div>
         </div>
-
-        <InvoiceTransHeader
-          trans={trans}
-          route={route.lines}
-          routeExpcodes={route.expensecodes}
-        />
       </form>
+
+      <InvoiceTransHeader
+        transid={data.TransactionId}
+        trans={trans}
+        route={route}
+      />
     </div>
   );
 }
