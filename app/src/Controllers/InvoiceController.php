@@ -134,6 +134,18 @@ class InvoiceController extends Controller
     
     public function invoiceTransItemSave($request, $response) {
         $res['posted'] = $request->getParsedBody();
+
+        if ($res['posted']['Id'] == "null") {
+            $itemline = new \Tabletransactionitems();
+            unset($res['posted']['Id']);
+            $itemline->fromArray($res['posted'])->save();
+            $res['data'] = $itemline->toArray();
+        } else {
+            $itemline = \TabletransactionitemsQuery::create()->filterById($res['posted']['Id'])->findOne();
+            $itemline->fromArray($res['posted'])->save();
+            $res['data'] = $itemline->toArray();
+        }
+
         return $response->withJSON($res);
     }
 }

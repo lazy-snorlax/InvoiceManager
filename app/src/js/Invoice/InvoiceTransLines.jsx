@@ -32,12 +32,6 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
     });
   }
 
-  function saveRow(e) {
-    let tr = e.target.closest("tr");
-    console.log(tr);
-    // await axios(route.itemsave, )
-  }
-
   return (
     <>
       <div className="overflow-x-auto h-64">
@@ -71,6 +65,7 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
               return (
                 <InvoiceTransLine
                   key={line.Id}
+                  route={route}
                   line={line}
                   expensecodes={expensecodes}
                 />

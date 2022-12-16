@@ -70,37 +70,39 @@ function InvoiceForm({ route, data, trans }) {
             />
           </div>
           <div className="mb-4 w-3/4">
-            <label className="label" htmlFor="CompanyNo">
-              <span className="label-text">Company No</span>
+            <label className="input-group" htmlFor="CompanyNo">
+              <span className="label-text">Company</span>
+              <select
+                className="input input-bordered w-full"
+                type="number"
+                name="CompanyNo"
+                data-type="integer"
+                value={data.CompanyNo ? data.CompanyNo : ""}
+                onChange={() => console.log("changedCompanyNo")}
+              >
+                {companies.map((company) => (
+                  <option key={company.CompanyId} value={company.CompanyId}>
+                    {company.CompanyName}
+                  </option>
+                ))}
+              </select>
             </label>
-            <select
-              className="input input-bordered w-full"
-              type="number"
-              name="CompanyNo"
-              data-type="integer"
-              value={data.CompanyNo ? data.CompanyNo : ""}
-              onChange={() => console.log("changedCompanyNo")}
-            >
-              {companies.map((company) => (
-                <option key={company.CompanyId} value={company.CompanyId}>
-                  {company.CompanyName}
-                </option>
-              ))}
-            </select>
           </div>
           <div className="mb-4 w-1/4">
-            <label className="label" htmlFor="Date">
+            <label className="input-group" htmlFor="Date">
               <span className="label-text">Date</span>
+              <input
+                className="input input-bordered w-full"
+                type="date"
+                name="Date"
+                data-type="datetime"
+                defaultValue={
+                  data.Date
+                    ? data.Date.split("-").reverse().join("-")
+                    : startDate
+                }
+              />
             </label>
-            <input
-              className="input input-bordered w-full"
-              type="date"
-              name="Date"
-              data-type="datetime"
-              defaultValue={
-                data.Date ? data.Date.split("-").reverse().join("-") : startDate
-              }
-            />
           </div>
           {/* <div className="mb-4 w-1/4">
             <label className="label" htmlFor="Days">
@@ -119,92 +121,92 @@ function InvoiceForm({ route, data, trans }) {
         </div>
         <div className="flex space-x-20">
           <div className="mb-4 w-1/3">
-            <label className="label" htmlFor="Type">
+            <label className="input-group" htmlFor="Type">
               <span className="label-text">Type</span>
+              <select
+                className="input input-bordered w-full"
+                name="Type"
+                data-type="integer"
+                value={data.Type ? data.Type : ""}
+                onChange={() => console.log("changedType")}
+              >
+                {invType.map((type) => (
+                  <option key={type.TypeCode} value={type.TypeCode}>
+                    {type.TypeDescription}
+                  </option>
+                ))}
+              </select>
             </label>
-            <select
-              className="input input-bordered w-full"
-              name="Type"
-              data-type="integer"
-              value={data.Type ? data.Type : ""}
-              onChange={() => console.log("changedType")}
-            >
-              {invType.map((type) => (
-                <option key={type.TypeCode} value={type.TypeCode}>
-                  {type.TypeDescription}
-                </option>
-              ))}
-            </select>
           </div>
           <div className="mb-4 w-1/3">
-            <label className="label" htmlFor="OrderNo">
+            <label className="input-group" htmlFor="OrderNo">
               <span className="label-text">Order No</span>
+              <input
+                className="input input-bordered w-full"
+                type="number"
+                name="OrderNo"
+                data-type="integer"
+                defaultValue={data.OrderNo ? data.OrderNo : ""}
+              />
             </label>
-            <input
-              className="input input-bordered w-full"
-              type="number"
-              name="OrderNo"
-              data-type="integer"
-              defaultValue={data.OrderNo ? data.OrderNo : ""}
-            />
           </div>
           <div className="mb-4 w-1/3">
-            <label className="label" htmlFor="Paid">
+            <label className="input-group" htmlFor="Paid">
               <span className="label-text">Paid</span>
+              <select
+                className="input input-bordered w-full"
+                name="Paid"
+                data-type="boolean"
+                defaultValue={data.Paid ? data.Paid : ""}
+                onChange={() => console.log("changedPaid")}
+              >
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
             </label>
-            <select
-              className="input input-bordered w-full"
-              name="Paid"
-              data-type="boolean"
-              defaultValue={data.Paid ? data.Paid : ""}
-              onChange={() => console.log("changedPaid")}
-            >
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
           </div>
         </div>
 
         <div className="flex space-x-10">
           <div className="mb-4 w-1/2">
-            <label className="label" htmlFor="BusinessNo">
-              <span className="label-text">Business No</span>
+            <label className="input-group" htmlFor="BusinessNo">
+              <span className="label-text">Business</span>
+              <select
+                className="input input-bordered w-full"
+                name="BusinessNo"
+                data-type="integer"
+                defaultValue={data.BusinessNo ? data.BusinessNo : ""}
+                onChange={() => console.log("changedBusinessNo")}
+              >
+                <option value="0">G & R Morelli</option>
+              </select>
             </label>
-            <select
-              className="input input-bordered w-full"
-              name="BusinessNo"
-              data-type="integer"
-              defaultValue={data.BusinessNo ? data.BusinessNo : ""}
-              onChange={() => console.log("changedBusinessNo")}
-            >
-              <option value="0">G & R Morelli</option>
-            </select>
           </div>
           <div className="mb-4 w-1/2">
-            <label className="label" htmlFor="PaymentDetail">
+            <label className="input-group" htmlFor="PaymentDetail">
               <span className="label-text">Payment Detail</span>
+              <input
+                className="input input-bordered w-full"
+                type="text"
+                name="PaymentDetail"
+                data-type="varchar"
+                defaultValue={data.PaymentDetail ? data.PaymentDetail : ""}
+              />
             </label>
-            <input
-              className="input input-bordered w-full"
-              type="text"
-              name="PaymentDetail"
-              data-type="varchar"
-              defaultValue={data.PaymentDetail ? data.PaymentDetail : ""}
-            />
           </div>
         </div>
         <div className="flex">
           <div className="mb-4 w-full">
-            <label className="label" htmlFor="Note">
+            <label className="input-group" htmlFor="Note">
               <span className="label-text">Note</span>
+              <input
+                className="input input-bordered w-full"
+                type="text"
+                name="Note"
+                data-type="varchar"
+                defaultValue={data.Note ? data.Note : ""}
+              />
             </label>
-            <input
-              className="input input-bordered w-full"
-              type="text"
-              name="Note"
-              data-type="varchar"
-              defaultValue={data.Note ? data.Note : ""}
-            />
           </div>
         </div>
       </form>
