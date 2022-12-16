@@ -5,6 +5,7 @@ import InvoiceTransHeader from "./InvoiceTransHeader";
 
 function InvoiceForm({ route, data, trans }) {
   // console.log(data, trans);
+  const [main, setMain] = useState([]);
   const [invType, setInvType] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [business, setBusiness] = useState([]);
@@ -14,6 +15,7 @@ function InvoiceForm({ route, data, trans }) {
   // console.log(">>> Routes", route);
 
   useEffect(() => {
+    setMain(data);
     const fetchData = async () => {
       const tblCompanies = await axios(route.companies);
       const tblTypes = await axios(route.types);
@@ -41,6 +43,16 @@ function InvoiceForm({ route, data, trans }) {
         console.log(response);
         if (response.error) {
           alert(response.error);
+          return;
+        }
+        setMain(response.data.data);
+        let url = window.location.href;
+        if (url.includes("/new")) {
+          window.history.replaceState(
+            null,
+            "GR Morelli Business Management System",
+            url.replace("/new", `/${response.data.data.TransactionId}`)
+          );
         }
       })
       .catch((error) => {
@@ -66,7 +78,7 @@ function InvoiceForm({ route, data, trans }) {
               name="TransactionId"
               data-type="integer"
               required="required"
-              defaultValue={data.TransactionId}
+              defaultValue={main.TransactionId}
             />
           </div>
           <div className="mb-4 w-3/4">
@@ -77,7 +89,7 @@ function InvoiceForm({ route, data, trans }) {
                 type="number"
                 name="CompanyNo"
                 data-type="integer"
-                value={data.CompanyNo ? data.CompanyNo : ""}
+                value={main.CompanyNo ? main.CompanyNo : ""}
                 onChange={() => console.log("changedCompanyNo")}
               >
                 {companies.map((company) => (
@@ -97,8 +109,8 @@ function InvoiceForm({ route, data, trans }) {
                 name="Date"
                 data-type="datetime"
                 defaultValue={
-                  data.Date
-                    ? data.Date.split("-").reverse().join("-")
+                  main.Date
+                    ? main.Date.split("-").reverse().join("-")
                     : startDate
                 }
               />
@@ -114,7 +126,7 @@ function InvoiceForm({ route, data, trans }) {
               name="Days"
               data-type="datetime"
               defaultValue={
-                data.Date ? data.Date.split("-").reverse().join("-") : startDate
+                main.Date ? main.Date.split("-").reverse().join("-") : startDate
               }
             />
           </div> */}
@@ -127,7 +139,7 @@ function InvoiceForm({ route, data, trans }) {
                 className="input input-bordered w-full"
                 name="Type"
                 data-type="integer"
-                value={data.Type ? data.Type : ""}
+                value={main.Type ? main.Type : ""}
                 onChange={() => console.log("changedType")}
               >
                 {invType.map((type) => (
@@ -146,7 +158,7 @@ function InvoiceForm({ route, data, trans }) {
                 type="number"
                 name="OrderNo"
                 data-type="integer"
-                defaultValue={data.OrderNo ? data.OrderNo : ""}
+                defaultValue={main.OrderNo ? main.OrderNo : ""}
               />
             </label>
           </div>
@@ -157,7 +169,7 @@ function InvoiceForm({ route, data, trans }) {
                 className="input input-bordered w-full"
                 name="Paid"
                 data-type="boolean"
-                defaultValue={data.Paid ? data.Paid : ""}
+                defaultValue={main.Paid ? main.Paid : ""}
                 onChange={() => console.log("changedPaid")}
               >
                 <option value="false">No</option>
@@ -175,7 +187,7 @@ function InvoiceForm({ route, data, trans }) {
                 className="input input-bordered w-full"
                 name="BusinessNo"
                 data-type="integer"
-                defaultValue={data.BusinessNo ? data.BusinessNo : ""}
+                defaultValue={main.BusinessNo ? main.BusinessNo : ""}
                 onChange={() => console.log("changedBusinessNo")}
               >
                 <option value="0">G & R Morelli</option>
@@ -190,7 +202,7 @@ function InvoiceForm({ route, data, trans }) {
                 type="text"
                 name="PaymentDetail"
                 data-type="varchar"
-                defaultValue={data.PaymentDetail ? data.PaymentDetail : ""}
+                defaultValue={main.PaymentDetail ? main.PaymentDetail : ""}
               />
             </label>
           </div>
@@ -204,7 +216,7 @@ function InvoiceForm({ route, data, trans }) {
                 type="text"
                 name="Note"
                 data-type="varchar"
-                defaultValue={data.Note ? data.Note : ""}
+                defaultValue={main.Note ? main.Note : ""}
               />
             </label>
           </div>

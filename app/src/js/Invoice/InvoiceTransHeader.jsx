@@ -3,13 +3,10 @@ import axios from "axios";
 import InvoiceTransLines from "./InvoiceTransLines";
 
 function InvoiceTransHeader({ transid, trans, route }) {
-  // console.log(">>> ", trans, route);
+  console.log(">>> ", transid);
   const [id, setId] = useState();
   const [tranhead, setTranHead] = useState([]);
   const [tranlines, setLines] = useState([]);
-  const [gst, setGst] = useState();
-  const [credit, setCredit] = useState();
-  const [total, setTotal] = useState();
   const [head, setHead] = useState({ id: "", text: "" });
 
   useEffect(() => {
@@ -30,25 +27,6 @@ function InvoiceTransHeader({ transid, trans, route }) {
     }
     document.querySelector("#invoiceTransHead").click();
   };
-
-  async function fetchTranLines(lineId) {
-    const tblLines = await axios(route.lines + "?id=" + lineId);
-    setLines(tblLines.data.lines);
-    setGst(tblLines.data.gstTotal);
-    setCredit(tblLines.data.creditTotal);
-    setTotal(tblLines.data.total);
-  }
-
-  async function loadTranLines(lineId) {
-    return (
-      <InvoiceTransLines
-        lineId={lineId}
-        route={route}
-        lines={tranlines}
-        routeExpcodes={route.expensecodes}
-      />
-    );
-  }
 
   function toggleActive(e) {
     let activeRow = e.target;
@@ -102,27 +80,28 @@ function InvoiceTransHeader({ transid, trans, route }) {
             </tr>
           </thead>
           <tbody>
-            {tranhead.map((tran) => (
-              <tr
-                className="hover"
-                key={tran.TitleNo}
-                onClick={(e) => {
-                  toggleActive(e);
-                  let id = e.target.closest("tr").children[0].innerText;
-                  let text = e.target.closest("tr").children[1].innerText;
-                  setId(id);
-                  setHead({ id: id, text: text });
-                  // loadTranLines(tran.TitleNo);
-                }}
-                onDoubleClick={(e) => {
-                  // console.log("Target", text);
-                  openModal();
-                }}
-              >
-                <td>{tran.TitleNo}</td>
-                <td colSpan={2}>{tran.TitleDescription}</td>
-              </tr>
-            ))}
+            {transid != null &&
+              tranhead.map((tran) => (
+                <tr
+                  className="hover"
+                  key={tran.TitleNo}
+                  onClick={(e) => {
+                    toggleActive(e);
+                    let id = e.target.closest("tr").children[0].innerText;
+                    let text = e.target.closest("tr").children[1].innerText;
+                    setId(id);
+                    setHead({ id: id, text: text });
+                    // loadTranLines(tran.TitleNo);
+                  }}
+                  onDoubleClick={(e) => {
+                    // console.log("Target", text);
+                    openModal();
+                  }}
+                >
+                  <td>{tran.TitleNo}</td>
+                  <td colSpan={2}>{tran.TitleDescription}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

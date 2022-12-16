@@ -24,13 +24,28 @@ class InvoiceController extends Controller
         return $this->view->render($response, 'list.twig', [
             "title" => "Invoices",
             "table" => "invoices",
+            "btns" => [
+                [
+                    "label" => "Add New",
+                    "route" => $this->router->pathFor('invoice.form', ['id'=> "new"])
+                ]
+            ],
             "request" => $_REQUEST
         ]);
     }
 
     public function invoiceForm($request, $response, array $args = []) {
-        $invoice = \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($request->getAttribute('id'))->findOne();
-        $invHeader = \TabletransactionitemstitleQuery::create()->filterByTransactionNo($invoice->getTransactionId())->find();
+        // !ddd(isset($args['id']));
+
+        $invoice = null;
+        $invHeader = null;
+        if ($args['id'] !== "new") {
+            $invoice = \TabletransactionmainQuery::create()->filterByType(1)->filterByTransactionId($request->getAttribute('id'))->findOne();
+            $invHeader = \TabletransactionitemstitleQuery::create()->filterByTransactionNo($invoice->getTransactionId())->find();
+        } else {
+            $invoice = (new \Tabletransactionmain());
+            $invHeader = (new \Tabletransactionitemstitle());
+        }
 
         // !ddd($invoice->toArray(), $invHeader->toArray());
 
@@ -54,9 +69,14 @@ class InvoiceController extends Controller
     }
 
     public function invoiceHead($request, $response) {
-        $head = \TabletransactionitemstitleQuery::create()->filterByTransactionno($_REQUEST['id'])->find();
-
-        if ($head ==  null) {
+        $head = null;
+        if ($_REQUEST['id'] !== "null") {
+            $head = \TabletransactionitemstitleQuery::create()->filterByTransactionno($_REQUEST['id'])->find();
+        } else {
+            $head = new \Tabletransactionitemstitle();
+        }
+        
+        if ($head == null) {
             $head = new \Tabletransactionitemstitle();
         }
         $head = $head->toArray();
@@ -100,12 +120,19 @@ class InvoiceController extends Controller
         $res['posted'] = $request->getParsedBody();
         try {
             if (isset($res['posted']['TransactionId'])) {
-                $invoice = \TabletransactionmainQuery::create()->filterByTransactionId($res['posted']['TransactionId'])->findOne();
-                
-                $invoice->fromArray($res['posted'])->save();
-                $res['data'] = $invoice->toArray();
-
-                $res['msg'] = "Successful POST";
+                if (($res['posted']['TransactionId']) !== "") {
+                    $invoice = \TabletransactionmainQuery::create()->filterByTransactionId($res['posted']['TransactionId'])->findOne();
+                    
+                    $invoice->fromArray($res['posted'])->save();
+                    $res['data'] = $invoice->toArray();
+                    $res['msg'] = "Successful POST";
+                } else {
+                    $invoice = new \Tabletransactionmain();
+                    unset($res['posted']['TransactionId']);
+                    $invoice->fromArray($res['posted'])->save();
+                    $res['data'] = $invoice->toArray();
+                    $res['msg'] = "Successful POST";
+                }
             }
         } catch (\Throwable $th) {
             $res['error'] = $th->getMessage() . "\n" . $th->getPrevious();
