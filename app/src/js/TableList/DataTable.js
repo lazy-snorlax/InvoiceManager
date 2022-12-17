@@ -19,6 +19,8 @@ export default class DataTable extends React.Component {
       columns: this.props.columns,
       ...this.props.options,
 
+      order: [[0, "desc"]],
+
       rowCallback(row, data, index) {
         console.log(">>> Rowcallback", row);
       },
