@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function InvoiceTransLine({ route, line, expensecodes }) {
   // console.log(">>> InvoiceTransLine", line, expensecodes);
-  const [itemline, setItemline] = useState();
+  const [itemline, setItemline] = useState([]);
 
-  useState(() => {
+  useEffect(() => {
     setItemline(line);
   }, [line]);
 
@@ -42,29 +42,29 @@ function InvoiceTransLine({ route, line, expensecodes }) {
   return (
     <>
       <tr className="hover" data-headid={line.Id} onChange={(e) => saveRow(e)}>
-        <td>{line.TitleItem}</td>
-        <td>{line.Item}</td>
+        <td>{itemline.TitleItem}</td>
+        <td>{itemline.Item}</td>
         <td>
           <textarea
             className="textarea textarea-bordered w-full"
             name="Description"
             id=""
             rows="2"
-            defaultValue={line.Description}
+            defaultValue={itemline.Description}
           ></textarea>
         </td>
         <td>
           <span className="tax">
-            {line.Tax != undefined
-              ? (parseFloat(line.Tax) * 100).toFixed(2)
+            {itemline.Tax != undefined
+              ? (parseFloat(itemline.Tax) * 100).toFixed(2)
               : "0.00"}
           </span>
           %
         </td>
         <td>
           <span className="money">
-            {line.GstCollected != undefined
-              ? parseFloat(line.GstCollected).toFixed(2)
+            {itemline.GstCollected != undefined
+              ? parseFloat(itemline.GstCollected).toFixed(2)
               : "0.00"}
           </span>
         </td>
@@ -76,7 +76,7 @@ function InvoiceTransLine({ route, line, expensecodes }) {
               name="Credit"
               type="number"
               step=".01"
-              defaultValue={parseFloat(line.Credit).toFixed(2)}
+              defaultValue={parseFloat(itemline.Credit).toFixed(2)}
               onChange={(e) => updateGst(e)}
             />
           </label>
@@ -86,7 +86,7 @@ function InvoiceTransLine({ route, line, expensecodes }) {
             name="Expense"
             id=""
             className="input input-bordered w-full"
-            defaultValue={line.Expense}
+            defaultValue={itemline.Expense}
           >
             {expensecodes.map((exp) => (
               <option value={exp.ExpenseCode} key={exp.ExpenseCode}>

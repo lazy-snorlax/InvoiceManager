@@ -107,7 +107,7 @@ class InvoiceController extends Controller
     }
 
     public function invoiceLines($request, $response) {
-        $lines = \TabletransactionitemsQuery::create()->filterByTitleItem($_REQUEST['id'])->find();
+        $lines = \TabletransactionitemsQuery::create()->filterByTitleItem($_REQUEST['id'])->orderByItem('asc')->find();
 
         if ($lines ==  null) {
             $lines = new \Tabletransactionitems();
@@ -182,18 +182,28 @@ class InvoiceController extends Controller
     
     public function invoiceTransItemSave($request, $response) {
         $res['posted'] = $request->getParsedBody();
-
+        $prevItem = \TabletransactionitemsQuery::create()->filterByTitleItem($res['posted']['TitleItem'])->count();
+        $prevItem = $prevItem + 1;
+        $res['posted']['Item'] = $prevItem;
+        
+        $itemline = null;
         if ($res['posted']['Id'] == "null") {
             $itemline = new \Tabletransactionitems();
             unset($res['posted']['Id']);
-            $itemline->fromArray($res['posted'])->save();
-            $res['data'] = $itemline->toArray();
+            $itemline->fromArray($res['posted']);
         } else {
             $itemline = \TabletransactionitemsQuery::create()->filterById($res['posted']['Id'])->findOne();
-            $itemline->fromArray($res['posted'])->save();
-            $res['data'] = $itemline->toArray();
+            $itemline->fromArray($res['posted']);
+            // $res['data'] = $itemline->toArray();
         }
 
+        try {
+            $itemline->save();
+            $res['data'] = $itemline->toArray();
+        } catch (\Throwable $th) {
+            $res['error'] = $th->getMessage() . "\n" . $th->getPrevious();
+        }
+        
         return $response->withJSON($res);
     }
 
