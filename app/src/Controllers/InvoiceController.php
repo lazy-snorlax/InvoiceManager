@@ -37,6 +37,8 @@ class InvoiceController extends Controller
     public function invoiceForm($request, $response, array $args = []) {
         // !ddd(isset($args['id']));
 
+        $doPDF = isset($_REQUEST['doPDF']) ? true : false;
+
         $invoice = null;
         $invHeader = null;
         if ($args['id'] !== "new") {
@@ -48,8 +50,27 @@ class InvoiceController extends Controller
         }
 
         // !ddd($invoice->toArray(), $invHeader->toArray());
+        
+        if ($doPDF) {
+            $titleNo = array_column($invHeader->toArray(), 'TitleNo');
+            $invLines = \TabletransactionitemsQuery::create()->filterByTitleItem($titleNo)->find();
+            $business = \TablebusinessdetailQuery::create()->findOne();
+            $company = \TablecompanydetailQuery::create()->filterByCompanyId($invoice->getCompanyNo())->findOne();
+            
+            $render = $this->view->render($response, 'reports/invoicePDF.twig', [
+                "title" => "Invoice Details - Transaction ID " . $invoice->getTransactionId(),
+                "invoice" => $invoice->toArray(),
+                "heads" => $invHeader->toArray(),
+                "lines" => $invLines->toArray(),
+                "business" => $business->toArray(),
+                "company" => $company->toArray(),
+            ]);
+            // return $render;
+            $this->generatePDF($render);
+            die();
+        }
 
-        return $this->view->render($response, 'pages/invoices.twig', [
+        $render = $this->view->render($response, 'pages/invoices.twig', [
             "title" => "Invoice Details - Transaction ID " . $invoice->getTransactionId(),
             "invoice" => $invoice->toArray(),
             "transactions" => $invHeader->toArray(),
@@ -65,7 +86,7 @@ class InvoiceController extends Controller
                 "head" => $this->router->pathFor('invoice.data.head'),
             ]
         ]);
-        return $response;    
+        return $render;    
     }
 
     public function invoiceHead($request, $response) {
@@ -174,6 +195,28 @@ class InvoiceController extends Controller
         }
 
         return $response->withJSON($res);
+    }
+
+    
+    private function generatePDF($request){
+        \ini_set("pcre.backtrack_limit", "100000000");
+        $mpdf = new \Mpdf\Mpdf([
+            'tempDir' => __DIR__ . '/tmp',
+            // 'mode' => 'c',
+            'margin_left' => 5,
+            'margin_right' => 5,
+            'margin_top' => 5,
+            'margin_bottom' => 5,
+            'margin_header' => 5,
+            'margin_footer' => 5
+        ]);
+        $mpdf->SetDisplayMode('fullpage');
+        $mpdf->setFooter('Page {PAGENO} of {nbpg}');
+        $mpdf->shrink_tables_to_fit = 1;
+        
+        $mpdf->WriteHTML($request->getBody());
+        $mpdf->Output('Invoice.pdf', \Mpdf\Output\Destination::INLINE);
+
     }
 }
 

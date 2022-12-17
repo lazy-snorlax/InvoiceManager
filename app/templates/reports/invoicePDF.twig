@@ -1,0 +1,154 @@
+{% extends "reports/report.twig" %}
+
+{% block body %}
+
+<style>
+    body {
+        font-size: 12px;
+    }
+
+</style>
+
+<table width="100%" style="margin-bottom: 10px">
+    <tr>
+        <td width="50%">
+            <img src="{{business.ImgLoc}}" width="200px" alt="LOGO.png">
+        </td>
+        <td style="text-align: center">
+            <h1 style="margin-bottom: 3px">{{"Tax Invoice"|upper}}</h1>
+            <span style="font-style: italic;font-weight: bold;">{{business.Note1}}</span> <br>
+            <span style="font-style: italic;font-weight: bold;">ABN: {{business.Abn1}}</span>  <br>
+            <span style="font-style: italic;font-weight: bold;">{{business.Address1}}</span> <br>
+            <span style="font-style: italic;font-weight: bold;">{{business.City1}}</span> <br>
+            <span style="font-style: italic;font-weight: bold;">{{business.State1}} {{business.PostCode2}}</span> <br>
+            <span style="font-style: italic;font-weight: bold;">Mobile {{ business.Mobile1 }}</span>
+        </td>
+    </tr>
+
+</table>
+
+
+<table width="100%">
+    <tr>
+    <td>
+        <table width="100%">
+            <tr>
+                <th style="vertical-align: top;">Invoice To:</th>
+                <td width="70%" style="border: solid 1px gray;">
+                    <span>{{company.CompanyName}} <br> </span>
+                    <span>{{company.Address4}} <br></span>
+                    <span>{{company.City4}} <br></span>
+                    <span>{{company.State4}} </span>
+                    <span style="text-align: right">{{company.PostCode4}} </span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    <td>
+        <table width="100%">
+            <tr>
+                <th style="text-align: right">Invoice No:</th>
+                <td style="border: solid 1px gray;text-align: center">{{invoice.TransactionId}}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right">Date:</th>
+                <td style="border: solid 1px gray;text-align: center">{{invoice.ReportDate}}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right">Order No:</th>
+                <td style="border: solid 1px gray;text-align: center">{{invoice.OrderNo}}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right">Terms:</th>
+                <td style="border: solid 1px gray;text-align: center">7 Days</td>
+            </tr>
+        </table>
+    </td>
+    </tr>
+</table>
+
+{% set invSubTotal = 0 %}
+{% set invGST = 0 %}
+{% set invTotal = 0 %}
+<table>
+    <tr style="">
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black;">Items</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black;">Description</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black;">GST</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black;">Amount</th>
+    </tr>
+    {% for h in heads %}
+        <tr>
+            <td colspan="4" style="border-bottom: dotted 1px black;">{{h.TitleDescription}}</td>
+        </tr>
+        {% set subtotal = 0 %}
+        {% set subGST = 0 %}
+        {% set itemTotal = 0 %}
+        {% for k, i in lines|filter((v) => v.TitleItem == h.TitleNo) %}
+            <tr>
+                <td style="text-align: center">{{i.Item}}</td>
+                <td>{{i.Description}}</td>
+                <td>${{i.GstCollected|number_format(2, '.', ',')}}</td>
+                <td>${{(i.GstCollected + i.Credit)|number_format(2, '.', ',')}}</td>
+            </tr>
+            {% set subtotal = subtotal + (i.Credit) %}
+            {% set subGST = subGST + i.GstCollected %}
+        {% endfor %}
+        {% set itemTotal = subtotal + subGST %}
+        <tr>
+            {# {% set line = lines|filter((v) => v.TitleItem == h.TitleNo) %} #}
+            {# {% set subtotal = value %} #}
+            <td colspan="4" style="border-bottom: dotted 1px black">
+                <table style="border-top: dotted 1px black;margin-left: auto; width: 55%">
+                    <tr>
+                        <th>Sub Total: </th>
+                        <td>${{ subtotal|number_format(2, '.', ',') }}</td>
+                        <th>GST: </th>
+                        <td>${{ subGST|number_format(2, '.', ',') }}</td>
+                        <th>Item Total:</th>
+                        <td>${{ itemTotal|number_format(2, '.', ',') }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        {% set invSubTotal = invSubTotal + subtotal %}
+        {% set invGST = invGST + subGST %}
+        {% set invTotal = invTotal + itemTotal %}
+    {% endfor %}
+</table>
+
+<br>
+<br>
+
+{# <pre>{{ dump(business) }}</pre> #}
+
+<table style="border-top: solid 1px gray; width: 100%">
+    <tr>
+        <td>
+            {{ business.Note2 }}
+        </td>
+    
+        <td style="">
+            <table style="width: 100%">
+                <tr>
+                    <th style="text-align: right; width: 50%">Sub Total:</th>
+                    <td style="border: solid 1px gray;text-align: center">${{invSubTotal|number_format(2, '.', ',')}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: right">GST:</th>
+                    <td style="border: solid 1px gray;text-align: center">${{invGST|number_format(2, '.', ',')}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: right">Grand Total:</th>
+                    <td style="border: solid 1px gray;text-align: center">${{invTotal|number_format(2, '.', ',')}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+
+
+{% endblock %}

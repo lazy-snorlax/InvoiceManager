@@ -1,0 +1,41 @@
+
+{# <link href="{{base_url()}}/dist/output.css" rel="stylesheet"> #}
+<style>
+body {
+	background-color:#efeeee;
+	font-family: calibri, 'Roboto', sans-serif;
+}
+.print-mode{
+	background-color:white;
+}
+
+h3{
+	margin: 1em 0 0.25em 0;
+	border-bottom: 1px solid black;
+}
+
+@media print {
+	{% if landscape %}
+	  @page {size: landscape}
+ 	{% else %}
+	  @page {size: portrait}
+	{% endif %}
+
+         .print-mode{
+			 max-width :auto !important; 
+			 margin: 0px !important; 
+			 border: none !important; 
+			 padding: 0px !important;
+			 page-break-after: always;
+		 }
+		 h1{
+			 font-size: 28px;
+		 }
+
+        body {
+            background-color:none;
+        }
+}
+</style>
+
+{% block body %}{% endblock %}

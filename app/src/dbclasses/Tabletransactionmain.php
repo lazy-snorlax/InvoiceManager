@@ -79,6 +79,7 @@ class Tabletransactionmain extends BaseTabletransactionmain
         $parent['Company'] = $this->getCompanyNo() != null ? \TablecompanydetailQuery::create()->findOneByCompanyId($this->getCompanyNo())->getCompanyName() : "";
 
         $parent['Date'] = $this->getDate() != null ? ($this->getDate())->format('d-m-Y') : "";
+        $parent['ReportDate'] = $this->getDate() != null ? ($this->getDate())->format('d-M-Y') : "";
 
         return $parent;
 

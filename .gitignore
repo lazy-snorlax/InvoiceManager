@@ -53,6 +53,7 @@ Thumbs.db
 
 app/config/config.php
 app/src/dbclass/Map
+app/src/Controllers/tmp
 app/src/dbclass/Base
 app/vendor/
 app/node_modules/
@@ -63,5 +64,3 @@ app/propel.yaml
 app/src/dbclasses/Base/
 app/src/dbclasses/Map/
 docker-compose.yml
-app/public/js/crud.js
-app/public/js/funeralOrder.js

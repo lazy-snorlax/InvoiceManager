@@ -67,6 +67,11 @@ function InvoiceForm({ route, data, trans }) {
         id="invoiceHead"
         onChange={saveOnChange}
       >
+        <div className="flex space-x-4 mx-auto text-center">
+          <div className="mb-4 w-1/4 mx-auto">
+            <a className="btn btn-primary">Preview Invoice</a>
+          </div>
+        </div>
         <div className="flex space-x-4">
           <div className="mb-4 w-1/4" hidden>
             <label className="label" htmlFor="TransactionId">
