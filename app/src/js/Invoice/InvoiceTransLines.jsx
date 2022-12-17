@@ -32,6 +32,15 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
     });
   }
 
+  async function getTotals(id) {
+    const tblLines = await axios(route.lines + "?id=" + id);
+    setTotals({
+      gst: tblLines.data.gstTotal,
+      credit: tblLines.data.creditTotal,
+      total: tblLines.data.total,
+    });
+  }
+
   return (
     <>
       <div className="overflow-x-auto h-64">
@@ -41,11 +50,11 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
             <tr>
               <th className="text-center w-10">Item No</th>
               <th className="text-center w-10">Item</th>
-              <th className="text-center w-3/6">Description</th>
-              <th className="text-center w-10">Tax%</th>
-              <th className="text-center w-10">GST</th>
+              <th className="text-center w-2/6">Description</th>
+              <th className="text-center w-1/6">Tax%</th>
+              <th className="text-center w-1/6">GST</th>
               <th className="text-center w-1/6">Cost</th>
-              <th className="text-center w-1/6">Expense</th>
+              <th className="text-center w-1/12">Expense</th>
               <th>
                 <a
                   className="btn btn-primary"
@@ -67,6 +76,7 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
                   key={line.Id}
                   route={route}
                   line={line}
+                  getTotals={getTotals.bind(this)}
                   expensecodes={expensecodes}
                 />
               );

@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
+import InvoiceTransLines from "./InvoiceTransLines";
 
-function InvoiceTransLine({ route, line, expensecodes }) {
-  // console.log(">>> InvoiceTransLine", line, expensecodes);
+function InvoiceTransLine(props) {
+  // console.log(">>> InvoiceTransLine", line, expensecodes); { route, line, expensecodes, getTotals }
   const [itemline, setItemline] = useState([]);
+  const { totals, getTotals } = props.getTotals;
 
   useEffect(() => {
-    setItemline(line);
-  }, [line]);
-
-  function updateGst(e) {
-    let elem = e.target;
-    let tr = elem.closest("tr");
-    console.log(">>> Changed Cost", tr);
-  }
+    setItemline(props.line);
+  }, [props.line]);
 
   async function saveRow(e) {
     let tr = e.target.closest("tr");
@@ -32,16 +29,21 @@ function InvoiceTransLine({ route, line, expensecodes }) {
     //   console.log(`${name} = ${value}`);
     // }
 
-    // console.log(elems, route.itemsave);
-    await axios.post(route.itemsave, form).then((res) => {
+    await axios.post(props.route.itemsave, form).then((res) => {
       console.log(">>> Save ItemLine", res);
       setItemline(res.data.data);
     });
+
+    props.getTotals(itemline.TitleItem);
   }
 
   return (
     <>
-      <tr className="hover" data-headid={line.Id} onChange={(e) => saveRow(e)}>
+      <tr
+        className="hover"
+        data-headid={props.line.Id}
+        onChange={(e) => saveRow(e)}
+      >
         <td>{itemline.TitleItem}</td>
         <td>{itemline.Item}</td>
         <td>
@@ -54,14 +56,22 @@ function InvoiceTransLine({ route, line, expensecodes }) {
           ></textarea>
         </td>
         <td>
-          <span className="tax">
-            {itemline.Tax != undefined
-              ? (parseFloat(itemline.Tax) * 100).toFixed(2)
-              : "0.00"}
-          </span>
-          %
+          <label className="input-group">
+            <input
+              type="number"
+              // name="Tax"
+              disabled
+              className="input input-bordered w-full"
+              defaultValue={
+                itemline.Tax != undefined
+                  ? (parseFloat(itemline.Tax) * 100).toFixed(2)
+                  : "10.00"
+              }
+            />
+            <span>%</span>
+          </label>
         </td>
-        <td>
+        <td className="text-center">
           <span className="money">
             {itemline.GstCollected != undefined
               ? parseFloat(itemline.GstCollected).toFixed(2)
@@ -76,8 +86,7 @@ function InvoiceTransLine({ route, line, expensecodes }) {
               name="Credit"
               type="number"
               step=".01"
-              defaultValue={parseFloat(itemline.Credit).toFixed(2)}
-              onChange={(e) => updateGst(e)}
+              defaultValue={itemline.Credit}
             />
           </label>
         </td>
@@ -88,7 +97,7 @@ function InvoiceTransLine({ route, line, expensecodes }) {
             className="input input-bordered w-full"
             defaultValue={itemline.Expense}
           >
-            {expensecodes.map((exp) => (
+            {props.expensecodes.map((exp) => (
               <option value={exp.ExpenseCode} key={exp.ExpenseCode}>
                 {exp.ExpenseDescription}
               </option>

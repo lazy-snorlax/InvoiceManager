@@ -118,7 +118,7 @@ class InvoiceController extends Controller
         if (isset($_REQUEST['newline'])) {
             $new = new \Tabletransactionitems();
             $new->setTitleItem($_REQUEST['id']);
-            $new->setTax(0);
+            $new->setTax(0.1);
             $new->setGstCollected(0);
             $new->setCredit(0);
 
@@ -182,20 +182,22 @@ class InvoiceController extends Controller
     
     public function invoiceTransItemSave($request, $response) {
         $res['posted'] = $request->getParsedBody();
-        $prevItem = \TabletransactionitemsQuery::create()->filterByTitleItem($res['posted']['TitleItem'])->count();
-        $prevItem = $prevItem + 1;
-        $res['posted']['Item'] = $prevItem;
         
         $itemline = null;
         if ($res['posted']['Id'] == "null") {
             $itemline = new \Tabletransactionitems();
             unset($res['posted']['Id']);
             $itemline->fromArray($res['posted']);
+            $prevItem = \TabletransactionitemsQuery::create()->filterByTitleItem($res['posted']['TitleItem'])->count();
+            $prevItem = $prevItem + 1;
+            $res['posted']['Item'] = $prevItem;
         } else {
             $itemline = \TabletransactionitemsQuery::create()->filterById($res['posted']['Id'])->findOne();
             $itemline->fromArray($res['posted']);
             // $res['data'] = $itemline->toArray();
         }
+
+        $itemline->setGstCollected($res['posted']['Credit'] * $itemline->getTax());
 
         try {
             $itemline->save();
