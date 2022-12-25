@@ -81,6 +81,7 @@ class InvoiceController extends Controller
                 "companies" => $this->router->pathFor('companies.list'),
                 "types" => $this->router->pathFor('types.list'),
                 "business" => $this->router->pathFor('business.list'),
+                "credit" => $this->router->pathFor('credit.list'),
                 "expensecodes" => $this->router->pathFor('expensecodes.data.list'),
                 "lines" => $this->router->pathFor('invoice.data.lines'),
                 "head" => $this->router->pathFor('invoice.data.head'),

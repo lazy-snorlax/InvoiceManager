@@ -9,6 +9,7 @@ function InvoiceForm({ route, data, trans }) {
   const [invType, setInvType] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [business, setBusiness] = useState([]);
+  const [credit, setCredit] = useState([]);
   // const [expensecodes, setExpensecodes] = useState([]);
   const [startDate, setStartDate] = useState();
 
@@ -16,16 +17,20 @@ function InvoiceForm({ route, data, trans }) {
 
   useEffect(() => {
     setMain(data);
+    let date = new Date();
+    setStartDate(date.toISOString().split("T")[0]);
     const fetchData = async () => {
-      const tblCompanies = await axios(route.companies);
+      const tblCompanies = await axios(route.companies + "?type=customers");
       const tblTypes = await axios(route.types);
       const tblBusiness = await axios(route.business);
+      const tblCredit = await axios(route.credit);
       // const tblExpensecodes = await axios(route.expensecodes);
 
       // console.log(tblTypes.data, tblCompanies.data, tblBusiness.data);
       setInvType(tblTypes.data.data);
       setCompanies(tblCompanies.data.companies);
       setBusiness(tblBusiness.data.data);
+      setCredit(tblCredit.data.data);
       // setExpensecodes(tblExpensecodes.data.data);
       // console.log(invType, companies, business);
     };
@@ -92,7 +97,7 @@ function InvoiceForm({ route, data, trans }) {
               defaultValue={main.TransactionId}
             />
           </div>
-          <div className="mb-4 w-3/4">
+          <div className="mb-4 w-2/4">
             <label className="input-group" htmlFor="CompanyNo">
               <span className="label-text">Company</span>
               <select
@@ -103,9 +108,30 @@ function InvoiceForm({ route, data, trans }) {
                 value={main.CompanyNo ? main.CompanyNo : ""}
                 onChange={() => console.log("changedCompanyNo")}
               >
+                <option value=""></option>
                 {companies.map((company) => (
                   <option key={company.CompanyId} value={company.CompanyId}>
                     {company.CompanyName}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="mb-4 w-1/4">
+            <label className="input-group" htmlFor="CreditType">
+              <span className="label-text">Credit Type</span>
+              <select
+                className="input input-bordered w-full"
+                type="number"
+                name="CreditType"
+                data-type="integer"
+                value="2"
+                onChange={() => console.log("changedCreditNo")}
+              >
+                <option value=""></option>
+                {credit.map((cred) => (
+                  <option key={cred.AccountType} value={cred.AccountType}>
+                    {cred.AccountDescription}
                   </option>
                 ))}
               </select>

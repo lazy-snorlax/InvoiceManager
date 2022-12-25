@@ -22,9 +22,27 @@ class CustomerController extends Controller
     }
 
     public function companies($request, $response) {
-        $companies = \TablecompanydetailQuery::create()->find();
+        $companies = null;
+        if (isset($_REQUEST['type'])) {
+            if ($_REQUEST['type'] == "customers") {
+                $companies = \TablecompanydetailQuery::create()->filterByCompanyType(1)->find();
+            } else if ($_REQUEST['type'] == "suppliers") {
+                $companies = \TablecompanydetailQuery::create()->filterByCompanyType(2)->find();
+            }
+        } else {
+            $companies = \TablecompanydetailQuery::create()->find();
+        }
+        
+        // Manually sort companies by comanpy name because of broken order by statement
+        $companiesList = $companies->toArray();
+        $compNames = array_column($companiesList, 'CompanyName');
+        $array_lowercase = array_map('strtolower', $compNames);
+        (array_multisort($array_lowercase, SORT_ASC, SORT_STRING, $companiesList));
+
+        // !ddd($companiesList);
+
         return $response->withJSON([
-            "companies" => $companies->toArray()
+            "companies" => $companiesList
         ]);
     }
 }

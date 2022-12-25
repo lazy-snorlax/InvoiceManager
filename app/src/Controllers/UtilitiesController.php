@@ -30,6 +30,7 @@ class UtilitiesController extends Controller
                 
                 $route->group('/Credittypes', function (\Slim\App $route) {
                     $route->get('', "UtilitiesController:CredittypesList")->setName('credittypes.list');
+                    $route->get('/list', "UtilitiesController:Credittypes")->setName('credit.list');
                 });
                 
                 $route->group('/Transactiontypes', function (\Slim\App $route) {
@@ -167,6 +168,15 @@ class UtilitiesController extends Controller
             "title" => "Transaction Types",
             "table" => "transactiontypes",
             "request" => $_REQUEST,
+        ]);
+    }
+
+    
+    public function Credittypes($request, $response)
+    {
+        $types = \TablecredittypeQuery::create()->find();
+        return $response->withJSON([
+            "data" => $types->toArray(),
         ]);
     }
     
