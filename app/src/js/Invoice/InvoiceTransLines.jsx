@@ -26,7 +26,17 @@ function InvoiceTransLines({ lineId, route, lines, routeExpcodes }) {
   }, [lineId]);
 
   async function appendRow() {
-    await axios(route.lines + "?id=" + lineId + "&newline=true").then((res) => {
+    if (lineId == 0) {
+      alert("Please select an address to write for");
+      return;
+    }
+
+    await axios(
+      route.lines +
+        "?id=" +
+        (lineId > 0 ? lineId : lineId + 1) +
+        "&newline=true"
+    ).then((res) => {
       console.log(res);
       setLines(res.data.lines);
     });

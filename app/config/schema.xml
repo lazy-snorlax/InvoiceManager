@@ -99,9 +99,9 @@
     <foreign-key foreignTable="[Table Transaction Items Title]" name="FK_TableTransactionItems_TableTransactionItemsTitle">
       <reference local="[Title Item]" foreign="[Title No]"/>
     </foreign-key>
-    <foreign-key foreignTable="[Table Tax Code]" name="FK_TableTransactionItems_TableTaxCode">
+    <!-- <foreign-key foreignTable="[Table Tax Code]" name="FK_TableTransactionItems_TableTaxCode">
       <reference local="[Tax%]" foreign="[Tax Percent]"/>
-    </foreign-key>
+    </foreign-key> -->
   </table>
   <table name="[Table Transaction Items Title]" idMethod="native" phpName="Tabletransactionitemstitle">
     <column name="[Title No]" tableMapName="TitleNo" phpName="TitleNo" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>

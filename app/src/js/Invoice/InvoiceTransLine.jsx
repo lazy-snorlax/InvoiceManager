@@ -21,6 +21,7 @@ function InvoiceTransLine(props) {
       form.append(ele.name, ele.value);
     });
 
+    // form.append("Tax", parseFloat(itemline.Tax));
     form.append("TitleItem", itemline.TitleItem);
     form.append("Item", itemline.Item);
     form.append("Id", itemline.Id);
@@ -59,8 +60,8 @@ function InvoiceTransLine(props) {
           <label className="input-group">
             <input
               type="number"
-              // name="Tax"
-              disabled
+              name="Tax"
+              // disabled
               className="input input-bordered w-full"
               defaultValue={
                 itemline.Tax != undefined
@@ -86,7 +87,11 @@ function InvoiceTransLine(props) {
               name="Credit"
               type="number"
               step=".01"
-              defaultValue={itemline.Credit}
+              defaultValue={
+                itemline.Credit != undefined
+                  ? parseFloat(itemline.Credit).toFixed(2)
+                  : console.log(itemline.Credit)
+              }
             />
           </label>
         </td>
