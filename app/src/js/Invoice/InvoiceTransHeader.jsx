@@ -10,12 +10,13 @@ function InvoiceTransHeader({ transid, trans, route }) {
   const [head, setHead] = useState({ id: "", text: "" });
 
   useEffect(() => {
-    async function fetchHeadLines(lineId) {
-      const tblLines = await axios(route.head + "?id=" + lineId);
-      setTranHead(tblLines.data.head);
-    }
     fetchHeadLines(transid);
   }, []);
+
+  async function fetchHeadLines(lineId) {
+    const tblLines = await axios(route.head + "?id=" + lineId);
+    setTranHead(tblLines.data.head);
+  }
 
   const openModal = () => {
     let input = document.querySelector("#transHeadName");
@@ -48,8 +49,8 @@ function InvoiceTransHeader({ transid, trans, route }) {
       })
       .then((res) => {
         console.log(res);
-        // fetchHeadLines(transid);
         setTranHead(res.data.titles);
+        fetchHeadLines(transid);
       })
       .catch((error) => {
         console.log(error);
