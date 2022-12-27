@@ -27,6 +27,7 @@ class InvoiceController extends Controller
             "btns" => [
                 [
                     "label" => "New Invoice",
+                    "target" => "_blank",
                     "route" => $this->router->pathFor('invoice.form', ['id'=> "new"])
                 ]
             ],

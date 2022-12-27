@@ -6,6 +6,7 @@ import InvoiceTransHeader from "./InvoiceTransHeader";
 function InvoiceForm({ route, data, trans }) {
   // console.log(data, trans);
   const [main, setMain] = useState([]);
+  const [transId, setTransId] = useState();
   const [invType, setInvType] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [business, setBusiness] = useState([]);
@@ -17,6 +18,7 @@ function InvoiceForm({ route, data, trans }) {
 
   useEffect(() => {
     setMain(data);
+    setTransId(data.TransactionId);
     let date = new Date();
     setStartDate(date.toISOString().split("T")[0]);
     const fetchData = async () => {
@@ -51,6 +53,7 @@ function InvoiceForm({ route, data, trans }) {
           return;
         }
         setMain(response.data.data);
+        setTransId(response.data.data.TransactionId);
         let url = window.location.href;
         if (url.includes("/new")) {
           window.history.replaceState(
@@ -260,11 +263,9 @@ function InvoiceForm({ route, data, trans }) {
         </div>
       </form>
 
-      <InvoiceTransHeader
-        transid={data.TransactionId}
-        trans={trans}
-        route={route}
-      />
+      <div className="">
+        <InvoiceTransHeader transid={transId} trans={trans} route={route} />
+      </div>
     </div>
   );
 }

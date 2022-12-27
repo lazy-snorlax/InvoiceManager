@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import InvoiceTransLines from "./InvoiceTransLines";
 
 function InvoiceTransLine(props) {
+  const ref = useRef();
   // console.log(">>> InvoiceTransLine", line, expensecodes); { route, line, expensecodes, getTotals }
   const [itemline, setItemline] = useState([]);
   const { totals, getTotals } = props.getTotals;
 
   useEffect(() => {
     setItemline(props.line);
+
+    document.addEventListener("keydown", keyDownHandler);
+    return () => document.removeEventListener("keydown", keyDownHandler);
   }, [props.line]);
 
   async function saveRow(e) {
@@ -37,6 +41,15 @@ function InvoiceTransLine(props) {
 
     props.getTotals(itemline.TitleItem);
   }
+
+  const keyDownHandler = React.useCallback((e) => {
+    if (e.keyCode === 13 && e.target.nodeName === "INPUT") {
+      var form = e.target.form;
+      var index = Array.prototype.indexOf.call(form, e.target);
+      form.elements[index + 2].focus();
+      e.preventDefault();
+    }
+  });
 
   return (
     <>

@@ -73,9 +73,9 @@
 <table width="100%">
     <tr style="">
         <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 10%">Items</th>
-        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 70%">Description</th>
-        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 10%">GST</th>
-        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 10%">Amount</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 60%">Description</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 15%">GST</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 15%">Amount</th>
     </tr>
     {% for h in heads %}
         <tr>
@@ -88,8 +88,8 @@
             <tr>
                 <td style="text-align: center">{{i.Item}}</td>
                 <td>{{i.Description}}</td>
-                <td style="text-align: center; padding:0 10px;">${{i.GstCollected|number_format(2, '.', ',')}}</td>
-                <td style="text-align: center; padding:0 10px;">${{(i.GstCollected + i.Credit)|number_format(2, '.', ',')}}</td>
+                <td style="text-align: right; padding:0 10px;">${{i.GstCollected|number_format(2, '.', ',')}}</td>
+                <td style="text-align: right; padding:0 10px;">${{(i.GstCollected + i.Credit)|number_format(2, '.', ',')}}</td>
             </tr>
             {% set subtotal = subtotal + (i.Credit) %}
             {% set subGST = subGST + i.GstCollected %}
@@ -125,6 +125,7 @@
 <table style="border-top: solid 1px gray; width: 100%">
     <tr>
         <td>
+            {{ business.BusinessName}}
             {{ business.Note2 }}
         </td>
     

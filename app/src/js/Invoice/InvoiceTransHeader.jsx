@@ -5,13 +5,16 @@ import InvoiceTransLines from "./InvoiceTransLines";
 function InvoiceTransHeader({ transid, trans, route }) {
   console.log(">>> ", transid);
   const [id, setId] = useState();
+  // const [transID, setTransId] = useState({ transid: transid });
   const [tranhead, setTranHead] = useState([]);
   const [tranlines, setLines] = useState([]);
   const [head, setHead] = useState({ id: "", text: "" });
 
   useEffect(() => {
+    // setTransId(transid);
     fetchHeadLines(transid);
-  }, []);
+    console.log(">>> TranHead", tranhead);
+  }, [transid]);
 
   async function fetchHeadLines(lineId) {
     const tblLines = await axios(route.head + "?id=" + lineId);
@@ -48,7 +51,7 @@ function InvoiceTransHeader({ transid, trans, route }) {
         TitleDescription: head.text,
       })
       .then((res) => {
-        console.log(res);
+        console.log(res, transid);
         setTranHead(res.data.titles);
         fetchHeadLines(transid);
       })
@@ -71,8 +74,14 @@ function InvoiceTransHeader({ transid, trans, route }) {
                   // htmlFor="invoiceTransHead"
                   className="btn btn-primary"
                   onClick={() => {
-                    setHead({ id: "0", text: "" });
-                    openModal();
+                    if (transid != null) {
+                      setHead({ id: "0", text: "" });
+                      openModal();
+                    } else {
+                      alert(
+                        "No transaction id found. If this is a new invoice, change something in the header fields and try again. If this message repeats, please report to tech support."
+                      );
+                    }
                   }}
                 >
                   +
@@ -82,6 +91,7 @@ function InvoiceTransHeader({ transid, trans, route }) {
           </thead>
           <tbody>
             {transid != null &&
+              tranhead.length > 0 &&
               tranhead.map((tran) => (
                 <tr
                   className="hover"
