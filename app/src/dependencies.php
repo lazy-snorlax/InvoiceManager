@@ -98,6 +98,10 @@ return function (App $app) {
         return new \App\Controllers\UtilitiesController($container);
     };    
 
+    $container['ReportController'] = function ($container) {
+        return new \App\Controllers\ReportController($container);
+    };    
+
     $container['Menu'] = function ($c) {
         return new \App\Auth\Menu($c);
     };

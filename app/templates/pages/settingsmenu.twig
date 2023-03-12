@@ -4,49 +4,65 @@
 
 {# <pre>{{ dump(data) }}</pre> #}
 
-<div class="container mx-auto text-center w-1/3">
-    <form class="flex flex-col mx-auto" onchange="saveForm(this)">
-        <div class="mb-4" >
+<div class="container mx-auto text-center">
+    <form class="mx-auto" onchange="saveForm(this)">
+        <div class="mb-4 mx-2" >
             <label class="label" for="BusinessNo">Business No</label>
             <input class="input input-bordered w-full" disabled type="number"  name="BusinessNo" data-type="integer" value="{{data.Id}}" />
         </div>
-        <div class="mb-4" >
-            <label class="label" for="DateMonthStart">Date Month Start</label>
-            <input type="input" class="input input-bordered w-full" name="DateMonthStart" data-type="varchar" value="{{data.DateMonthStart|date('d/m/Y')}}" />
+        <div class="grid grid-cols-2">
+            <div class="mb-4 mx-2" >
+                <label class="label" for="DateMonthStart">Date Month Start</label>
+                <input type="input" class="input input-bordered w-full" name="DateMonthStart" data-type="varchar" value="{{data.DateMonthStart|date('d/m/Y')}}" />
+            </div>
+            <div class="mb-4 mx-2" >
+                <label class="label" for="DateMonthEnd">Date Month End</label>
+                <input type="input" class="input input-bordered w-full" name="DateMonthEnd" data-type="varchar" value="{{data.DateMonthEnd|date('d/m/Y')}}" />
+            </div>
         </div>
-        <div class="mb-4" >
-            <label class="label" for="DateMonthEnd">Date Month End</label>
-            <input type="input" class="input input-bordered w-full" name="DateMonthEnd" data-type="varchar" value="{{data.DateMonthEnd|date('d/m/Y')}}" />
-        </div> 
-        <div class="mb-4" >
-            <label class="label" for="DateYearStart">Date Year Start</label>
-            <input type="input" class="input input-bordered w-full" name="DateYearStart" data-type="varchar" value="{{data.DateYearStart|date('d/m/Y')}}" />
+
+        <div class="grid grid-cols-2">
+            <div class="mb-4 mx-2" >
+                <label class="label" for="DateYearStart">Date Year Start</label>
+                <input type="input" class="input input-bordered w-full" name="DateYearStart" data-type="varchar" value="{{data.DateYearStart|date('d/m/Y')}}" />
+            </div>
+            <div class="mb-4 mx-2" >
+                <label class="label" for="DateYearEnd">Date Year End</label>
+                <input type="input" class="input input-bordered w-full" name="DateYearEnd" data-type="varchar" value="{{data.DateYearEnd|date('d/m/Y')}}" />
+            </div> 
         </div>
-        <div class="mb-4" >
-            <label class="label" for="DateYearEnd">Date Year End</label>
-            <input type="input" class="input input-bordered w-full" name="DateYearEnd" data-type="varchar" value="{{data.DateYearEnd|date('d/m/Y')}}" />
-        </div> 
-        <div class="mb-4" >
+
+        <div class="mb-4 mx-2" >
             <label class="label" for="LabourRate">Labour Rate</label>
-            <input class="input input-bordered w-full" type="number"  step="0.001"  name="LabourRate" data-type="decimal" value="{{data.LabourRate}}" />
+            <label for="" class="input-group input-group-md">
+            <label for="LabourRate" class="input-group input-group-md">
+                <span>$</span>
+                <input class="input input-bordered w-full" type="number"  step="0.01"  name="LabourRate" data-type="decimal" value="{{data.LabourRate}}" />
+            </label>
         </div>
-        <div class="mb-4" >
+        <div class="mb-4 mx-2" >
             <label class="label" for="TaxPercent">Tax Percent</label>
+            <label for="TaxPercent" class="input-group input-group-md">
             <input class="input input-bordered w-full" type="number"  step="0.001"  name="TaxPercent" data-type="float"  value="{{data.TaxPercent}}"/>
+            <span>%</span>
+            </label>
         </div>
-        <div class="mb-4" >
+        <div class="mb-4 mx-2" >
             <label class="label" for="MarkupPercent">Markup Percent</label>
+            <label for="MarkupPercent" class="input-group input-group-md">
             <input class="input input-bordered w-full" type="number"  step="0.001"  name="MarkupPercent" data-type="float" value="{{data.MarkupPercent}}" />
+            <span>%</span>
+            </label>
         </div>
-        <div class="mb-4" >
+        <div class="mb-4 mx-2" >
             <label class="label" for="SalesExpense">Sales Expense</label>
             <input class="input input-bordered w-full" type="number"  name="SalesExpense" data-type="integer" value="{{data.SalesExpense}}"/>
         </div>
-        <div class="mb-4" >
+        <div class="mb-4 mx-2" >
             <label class="label" for="PurchaseExpense">Purchase Expense</label>
             <input class="input input-bordered w-full" type="number"  name="PurchaseExpense" data-type="integer" value="{{data.PurchaseExpense}}" />
         </div>
-        <div class="mb-4" >
+        <div class="mb-4 mx-2" >
             <label class="label" for="QuoteExpense">Quote Expense</label>
             <input class="input input-bordered w-full" type="number"  name="QuoteExpense" data-type="integer" value="{{data.QuoteExpense}}" />
         </div>

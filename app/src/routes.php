@@ -20,6 +20,7 @@ return function (App $app) {
         \App\Controllers\CustomerController::routes($this);
         \App\Controllers\SupplierController::routes($this);
         \App\Controllers\UtilitiesController::routes($this);
+        \App\Controllers\ReportController::routes($this);
     })->add(new GuestMiddleware($container));
     
     $app->group('', function() {
