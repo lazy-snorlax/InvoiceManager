@@ -2,81 +2,55 @@
 
 {% block body %}
 
-<div class="container mx-auto text-center">
+{# <pre>{{ dump(data) }}</pre> #}
 
-    <div class="container mx-auto text-center">
-        {# <div class="form-group d-flex" hidden>
-            <label class="col-form-label col-md-3 text-right" for="Id">Id</label>
-            <input class="form-control" type="number" disabled name="Id" data-type="integer" required="required" />
-        </div> #}
-        <div class="mb-4 w-1/4" >
+<div class="container mx-auto text-center w-1/3">
+    <form class="flex flex-col mx-auto" onchange="saveForm(this)">
+        <div class="mb-4" >
             <label class="label" for="BusinessNo">Business No</label>
-            <input class="input input-bordered w-full" type="number"  name="BusinessNo" data-type="integer"  />
+            <input class="input input-bordered w-full" disabled type="number"  name="BusinessNo" data-type="integer" value="{{data.Id}}" />
         </div>
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="DateMonthStart">Date Month Start</label>
-            <input type="input" class="input input-bordered w-full" name="DateMonthStart" data-type="varchar"  />
-        </div> 
-        <div class="mb-4 w-1/4" >
+            <input type="input" class="input input-bordered w-full" name="DateMonthStart" data-type="varchar" value="{{data.DateMonthStart|date('d/m/Y')}}" />
+        </div>
+        <div class="mb-4" >
             <label class="label" for="DateMonthEnd">Date Month End</label>
-            <input type="input" class="input input-bordered w-full" name="DateMonthEnd" data-type="varchar"  />
+            <input type="input" class="input input-bordered w-full" name="DateMonthEnd" data-type="varchar" value="{{data.DateMonthEnd|date('d/m/Y')}}" />
         </div> 
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="DateYearStart">Date Year Start</label>
-            <input type="input" class="input input-bordered w-full" name="DateYearStart" data-type="varchar"  />
-        </div> 
-        <div class="mb-4 w-1/4" >
+            <input type="input" class="input input-bordered w-full" name="DateYearStart" data-type="varchar" value="{{data.DateYearStart|date('d/m/Y')}}" />
+        </div>
+        <div class="mb-4" >
             <label class="label" for="DateYearEnd">Date Year End</label>
-            <input type="input" class="input input-bordered w-full" name="DateYearEnd" data-type="varchar"  />
+            <input type="input" class="input input-bordered w-full" name="DateYearEnd" data-type="varchar" value="{{data.DateYearEnd|date('d/m/Y')}}" />
         </div> 
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="LabourRate">Labour Rate</label>
-            <textarea class="input input-bordered w-full" type="number"  step="0.001"  name="LabourRate" data-type="decimal"   />
+            <input class="input input-bordered w-full" type="number"  step="0.001"  name="LabourRate" data-type="decimal" value="{{data.LabourRate}}" />
         </div>
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="TaxPercent">Tax Percent</label>
-            <textarea class="input input-bordered w-full" type="number"  step="0.001"  name="TaxPercent" data-type="float"   />
+            <input class="input input-bordered w-full" type="number"  step="0.001"  name="TaxPercent" data-type="float"  value="{{data.TaxPercent}}"/>
         </div>
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="MarkupPercent">Markup Percent</label>
-            <textarea class="input input-bordered w-full" type="number"  step="0.001"  name="MarkupPercent" data-type="float"   />
+            <input class="input input-bordered w-full" type="number"  step="0.001"  name="MarkupPercent" data-type="float" value="{{data.MarkupPercent}}" />
         </div>
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="SalesExpense">Sales Expense</label>
-            <input class="input input-bordered w-full" type="number"  name="SalesExpense" data-type="integer"  />
+            <input class="input input-bordered w-full" type="number"  name="SalesExpense" data-type="integer" value="{{data.SalesExpense}}"/>
         </div>
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="PurchaseExpense">Purchase Expense</label>
-            <input class="input input-bordered w-full" type="number"  name="PurchaseExpense" data-type="integer"  />
+            <input class="input input-bordered w-full" type="number"  name="PurchaseExpense" data-type="integer" value="{{data.PurchaseExpense}}" />
         </div>
-        <div class="mb-4 w-1/4" >
+        <div class="mb-4" >
             <label class="label" for="QuoteExpense">Quote Expense</label>
-            <input class="input input-bordered w-full" type="number"  name="QuoteExpense" data-type="integer"  />
+            <input class="input input-bordered w-full" type="number"  name="QuoteExpense" data-type="integer" value="{{data.QuoteExpense}}" />
         </div>
-    
-    </div>
-
-
-    <div class="flex flex-col mx-auto">
-        <div class="mb-2 mt-2">
-            <a href="{{ path_for('expensecodes.list') }}" class="btn btn-secondary btn-wide">Expense Codes</a>
-        </div>
-        <div class="mb-2 mt-2">
-            <a href="{{ path_for('expensegroups.list') }}" class="btn btn-secondary btn-wide">Expense Groups</a>
-        </div>
-        <div class="mb-2 mt-2">
-            <a href="{{ path_for('taxcodes.list') }}" class="btn btn-secondary btn-wide">Tax Codes</a>
-        </div>
-        <div class="mb-2 mt-2">
-            <a href="{{ path_for('companytypes.list') }}" class="btn btn-secondary btn-wide">Company Types</a>
-        </div>
-        <div class="mb-2 mt-2">
-            <a href="{{ path_for('credittypes.list') }}" class="btn btn-secondary btn-wide">Credit Types</a>
-        </div>
-        <div class="mb-2 mt-2">
-            <a href="{{ path_for('transactiontypes.list') }}" class="btn btn-secondary btn-wide">Transaction Types</a>
-        </div>
-    </div>
+    </form>
 </div>
 
 
@@ -85,5 +59,26 @@
 {% block scripts %}
 
 <script src="{{ base_url() }}/dist/MainMenu.bundle.js?q={{random()}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    
+const saveUrl = "{{ path_for('settings.save')}}";
+
+async function saveForm(form) {
+    let formData = new FormData(form);
+
+    
+    let response = await fetch(saveUrl, {
+        method: 'POST',
+        body: formData
+    });
+    
+    let result = await response.json();
+
+    console.log(">>> Save Form", result);
+
+}
+
+</script>
 
 {% endblock %}

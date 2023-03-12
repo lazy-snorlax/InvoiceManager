@@ -59,10 +59,10 @@
   <table name="[Table Default Setting]" idMethod="native" phpName="Tabledefaultsetting">
     <column name="ID" phpName="Id" type="INTEGER" size="4" scale="0" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="[Business No]" tableMapName="BusinessNo" phpName="BusinessNo" type="INTEGER" size="4" scale="0"/>
-    <column name="[Date Month Start]" tableMapName="DateMonthStart" phpName="DateMonthStart" type="VARCHAR" size="54"/>
-    <column name="[Date Month End]" tableMapName="DateMonthEnd" phpName="DateMonthEnd" type="VARCHAR" size="54"/>
-    <column name="[Date Year Start]" tableMapName="DateYearStart" phpName="DateYearStart" type="VARCHAR" size="54"/>
-    <column name="[Date Year End]" tableMapName="DateYearEnd" phpName="DateYearEnd" type="VARCHAR" size="54"/>
+    <column name="[Date Month Start]" tableMapName="DateMonthStart" phpName="DateMonthStart" type="TIMESTAMP" size="54"/>
+    <column name="[Date Month End]" tableMapName="DateMonthEnd" phpName="DateMonthEnd" type="TIMESTAMP" size="54"/>
+    <column name="[Date Year Start]" tableMapName="DateYearStart" phpName="DateYearStart" type="TIMESTAMP" size="54"/>
+    <column name="[Date Year End]" tableMapName="DateYearEnd" phpName="DateYearEnd" type="TIMESTAMP" size="54"/>
     <column name="[Labour Rate]" tableMapName="LabourRate" phpName="LabourRate" type="DECIMAL" size="21" scale="4"/>
     <column name="[Tax Percent]" tableMapName="TaxPercent" phpName="TaxPercent" type="FLOAT" size="8"/>
     <column name="[Markup Percent]" tableMapName="MarkupPercent" phpName="MarkupPercent" type="FLOAT" size="8"/>

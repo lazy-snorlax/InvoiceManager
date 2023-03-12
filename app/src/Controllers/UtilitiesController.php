@@ -6,8 +6,9 @@ class UtilitiesController extends Controller
 {
     
     public static function routes(\Slim\App $app) {
-        $app->group('/Settings', function (\Slim\App $route) {
+        $app->group('/settings', function (\Slim\App $route) {
                 $route->get('', "UtilitiesController:settingsmenu")->setName('settings.menu');
+                $route->post('/post', "UtilitiesController:settingsPost")->setName('settings.save');
 
                 
                 $route->group('/Expensecodes', function (\Slim\App $route) {
@@ -51,8 +52,26 @@ class UtilitiesController extends Controller
 
     public function settingsmenu($request, $response)
     {
+        $settings = \TabledefaultsettingQuery::create()->findOne()->toArray();
         return $this->view->render($response, 'pages\settingsmenu.twig', [
-            "title" => "Settings Menu"
+            "title" => "Settings Menu",
+            "data" => $settings
+        ]);
+    }
+
+    public function settingsPost($request, $response)
+    {
+        $settings = \TabledefaultsettingQuery::create()->findOne();
+        $settings->fromArray($request->getParsedBody());
+        try {
+            $settings->save();
+        } catch (\Throwable $th) {
+            $message = $th->getMessage() . "  " . $th->getPrevious();
+            echo $message;
+        }
+
+        return $response->withJSON([
+            'settings' => $settings->toArray()
         ]);
     }
     
