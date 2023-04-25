@@ -2,24 +2,47 @@
 
 {% block body %}
 <div class="container mx-auto text-center">
+
+    <form id="dates" class="">
+            <h3 class="h3">Select a date range for the report</h3>
+        <div class="grid grid-cols-2">
+            <div class="mb-4 mx-2" >
+                <label class="label" for="DateYearStart">Start Date</label>
+                <input id="startDate" type="input" class="input input-bordered w-full" name="DateYearStart" data-type="varchar" value="{{start}}" />
+            </div>
+            <div class="mb-4 mx-2" >
+                <label class="label" for="DateYearEnd">End Date</label>
+                <input id="endDate" type="input" class="input input-bordered w-full" name="DateYearEnd" data-type="varchar" value="{{end}}" />
+            </div> 
+        </div>
+    </form>
     
     <div class="flex flex-col mx-auto">
         <div class="mb-2 mt-2">
-            <a class="btn btn-secondary btn-wide">Expenses</a>
+            <a d-href='{{ path_for('reports.salesby') }}' target='_blank' onmousedown="updateHyperlink(this)" class="btn btn-secondary btn-wide">Sales</a>
         </div>
         <div class="mb-2 mt-2">
-            <a class="btn btn-secondary btn-wide">Sales</a>
-        </div>
-        <div class="mb-2 mt-2">
-            <a href='{{ path_for('reports.exportby') }}?q=month' class="btn btn-secondary btn-wide">Export to Excel By Month</a>
-        </div>
-        <div class="mb-2 mt-2">
-            <a href='{{ path_for('reports.exportby') }}?q=year' class="btn btn-secondary btn-wide">Export to Excel By Year</a>
+            <a d-href='{{ path_for('reports.exportby') }}' target='_blank' onmousedown="updateHyperlink(this)" class="btn btn-secondary btn-wide">Export to Excel</a>
         </div>
     </div>
 </div>
 {% endblock %}
 
-
 {% block scripts %}
+<script>
+
+function updateHyperlink(link) {
+    let startDate = document.getElementById('startDate');
+    let endDate = document.getElementById('endDate');
+
+    let start = startDate.value.split('/').reverse().join('-');
+    let end = endDate.value.split('/').reverse().join('-');
+
+    let url = link.getAttribute('d-href') + '?start=' + start + '&end=' + end;
+
+    window.open(url, '_blank').focus();
+}
+
+</script>
+
 {% endblock %}

@@ -1,0 +1,75 @@
+{% extends "reports/report.twig" %}
+
+{% block body %}
+
+<style>
+    body {
+        font-size: 12px;
+    }
+
+</style>
+
+<table width="100%" style="margin-bottom: 10px">
+    <tr>
+        <td width="50%">
+            <h1>Sales By Customer</h1>
+        </td>
+    </tr>
+</table>
+<h3>{{dates[0]}} to {{dates[1]}}</h3>
+{% set sales = 0 %}
+{% set gst = 0 %}
+{% set total = 0 %}
+<table width="100%">
+    <tr style="">
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 10%">Company No</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 60%">Company Name</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 15%">GST</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 15%">Sales</th>
+        <th style="border-bottom: solid 2px black;border-top: solid 1px black; width: 15%">Total</th>
+    </tr>
+    {% for d in data %}
+        <tr>
+            <td>{{d.CompanyNo}}</td>
+            <td>{{d.CompanyName}}</td>
+            <td>${{d.GST|number_format(2, '.', ',')}}</td>
+            <td>${{d.Sales|number_format(2, '.', ',')}}</td>
+            <td>${{d.Total|number_format(2, '.', ',')}}</td>
+        </tr>
+        {% set sales = sales + d.Sales %}
+        {% set gst = gst + d.GST %}
+        {% set total = total + d.Total %}
+    {% endfor %}
+</table>
+
+<br>
+<br>
+
+{# <pre>{{ dump(business) }}</pre> #}
+
+<table style="border-top: solid 1px gray; width: 100%">
+    <tr>    
+        <td style="">
+            <table style="width: 100%">
+                <tr>
+                    <th style="text-align: right; width: 50%">Total Sales:</th>
+                    <td style="border: solid 1px gray;text-align: center">${{sales|number_format(2, '.', ',')}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: right">Total GST:</th>
+                    <td style="border: solid 1px gray;text-align: center">${{gst|number_format(2, '.', ',')}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: right">Total Sales + GST:</th>
+                    <td style="border: solid 1px gray;text-align: center">${{total|number_format(2, '.', ',')}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+
+
+{% endblock %}

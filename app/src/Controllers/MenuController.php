@@ -23,8 +23,13 @@ class MenuController extends Controller
 
     
     public function reportmenu($request, $response) {
+
+        $dates = \TabledefaultsettingQuery::create()->findOne();
+
         return $this->view->render($response, 'pages\reports.twig', [
             'title' => "Reports Dashboard",
+            'start' => $dates->getDateMonthStart()->format('d/m/Y'),
+            'end' => $dates->getDateMonthEnd()->format('d/m/Y'),
         ]);
     }
 }
